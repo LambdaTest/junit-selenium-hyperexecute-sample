@@ -42,11 +42,12 @@ public class ToDoTest
         System.out.println("Setting up resources to run tests on HyperExecute Grid");
     }
 
-    public void SetUpBrowser(String browser)
+    public void SetUpBrowser(String browserName, String version, String platform,
+                             String build, String name)
     {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        if (browser.equalsIgnoreCase("Chrome"))
+        /*if (browser.equalsIgnoreCase("Chrome"))
         {
             capabilities.setCapability("browserName", "chrome");
             capabilities.setCapability("version", "latest");
@@ -70,6 +71,17 @@ public class ToDoTest
             capabilities.setCapability("video", true);
             capabilities.setCapability("console", true);
         }
+         */
+        capabilities.setCapability("browserName", browserName);
+        capabilities.setCapability("version", version);
+        capabilities.setCapability("platform", platform);
+        capabilities.setCapability("build", build);
+        capabilities.setCapability("name", name);
+        capabilities.setCapability("network", true);
+        capabilities.setCapability("visual", true);
+        capabilities.setCapability("video", true);
+        capabilities.setCapability("console", true);
+
         try
         {
             driver = new RemoteWebDriver(new URL("https://" + user_name + ":" + access_key + gridURL), capabilities);
@@ -86,9 +98,10 @@ public class ToDoTest
 
     @ParameterizedTest
     @MethodSource("browser")
-    public void test_ToDoApp(String browser)
+    public void test_ToDo(String browserName, String version, String platform,
+                             String build, String name)
     {
-        SetUpBrowser(browser);
+        SetUpBrowser(browserName, version, platform, build, name);
 
         String methodName = Thread.currentThread()
                 .getStackTrace()[1]
@@ -138,8 +151,12 @@ public class ToDoTest
     static Stream<Arguments> browser()
     {
         return Stream.of(
-                arguments("Chrome"),
-                arguments("Firefox")
+                arguments("Chrome", "latest", "Windows 10",
+                        "[Test - 1] JUnit tests on HyperExecute Grid",
+                        "[Test - 1] JUnit tests on HyperExecute Grid"),
+                arguments("Firefox", "latest", "Windows 10",
+                        "[Test - 2] JUnit tests on HyperExecute Grid",
+                        "[Test - 2] JUnit tests on HyperExecute Grid")
         );
     }
 }
