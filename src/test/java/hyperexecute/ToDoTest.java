@@ -47,31 +47,6 @@ public class ToDoTest
     {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        /*if (browser.equalsIgnoreCase("Chrome"))
-        {
-            capabilities.setCapability("browserName", "chrome");
-            capabilities.setCapability("version", "latest");
-            capabilities.setCapability("platform", "Windows 10");
-            capabilities.setCapability("build", "[Test 1] Running_Junit5Tests_In_Grid_Chrome");
-            capabilities.setCapability("name", "JUnit5Tests_Chrome");
-            capabilities.setCapability("network", true);
-            capabilities.setCapability("visual", true);
-            capabilities.setCapability("video", true);
-            capabilities.setCapability("console", true);
-        }
-        if (browser.equalsIgnoreCase("Firefox"))
-        {
-            capabilities.setCapability("browserName", "Firefox");
-            capabilities.setCapability("version", "latest");
-            capabilities.setCapability("platform", "Windows 10");
-            capabilities.setCapability("build", "[Test 2] Running_Junit5Tests_In_Grid_Firefox");
-            capabilities.setCapability("name", "JUnit5Tests_Firefox");
-            capabilities.setCapability("network", true);
-            capabilities.setCapability("visual", true);
-            capabilities.setCapability("video", true);
-            capabilities.setCapability("console", true);
-        }
-         */
         capabilities.setCapability("browserName", browserName);
         capabilities.setCapability("version", version);
         capabilities.setCapability("platform", platform);
@@ -151,10 +126,10 @@ public class ToDoTest
     static Stream<Arguments> browser()
     {
         return Stream.of(
-                arguments("Chrome", "latest", "Windows 10",
+                arguments("Chrome", "latest", "MacOS Catalina",
                         "[Test - 1] JUnit tests on HyperExecute Grid",
                         "[Test - 1] JUnit tests on HyperExecute Grid"),
-                arguments("Firefox", "latest", "Windows 10",
+                arguments("Firefox", "latest", "MacOS Catalina",
                         "[Test - 2] JUnit tests on HyperExecute Grid",
                         "[Test - 2] JUnit tests on HyperExecute Grid")
         );

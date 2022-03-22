@@ -20,7 +20,7 @@ cacheDirectories:
   - $CACHE_DIR
 
 matrix:
-  tests: ["Test1", "Test2", "Test3", "Test4" ]
+  classname: ["ToDoTest", "SelPlayGroundTest1", "SelPlayGroundTest2" ]
 
 shell: bash
 
@@ -32,14 +32,17 @@ pre:
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 
 post:
-  - cat yaml/testng_hypertest_matrix_sample.yaml
+  - cat yaml/junit_hyperexecute_matrix_sample.yaml
 
 mergeArtifacts: true
 
 uploadArtefacts:
-  - name: ExecutionSnapshots
-    path:
-      - target/surefire-reports/html/**
+ - name: Final Report
+   path:
+    - target/site/**
+ - name: Surefire Report
+   path:
+    - target/surefire-reports/**
 
 testSuites:
-  - mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$tests
+  - mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$classname test site surefire-report:report

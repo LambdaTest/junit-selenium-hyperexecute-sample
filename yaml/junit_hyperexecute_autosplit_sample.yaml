@@ -15,7 +15,7 @@ concurrency: 4
 env:
   # PAT: ${{ .secrets.testKey }}
   CACHE_DIR: ~/m2_cache_dir
-  
+
 # Dependency caching for Windows
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
@@ -26,23 +26,27 @@ shell: bash
 pre:
   # Create the Cache directory
   - mkdir ~/m2_cache_dir
-  # Download and install packages in the CACHE_DIR. 
+  # Download and install packages in the CACHE_DIR.
   # Skip execution of the tests in the pre step
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 
 post:
-  - cat yaml/junit_hypertest_autosplit_sample.yaml
+  - cat yaml/junit_hyperexecute_autosplit_sample.yaml
 
 mergeArtifacts: true
 
 uploadArtefacts:
- - name: ExecutionSnapshots
+ - name: Final Report
    path:
-    - target/surefire-reports/html/**
+    - target/site/**
+ - name: Surefire Report
+   path:
+    - target/surefire-reports/**
 
 testDiscovery:
   type: raw
   mode: static
-  command: grep 'class name' testng.xml | awk '{print$2}' | sed 's/name=//g' | sed 's/\x3e//g'
+  command: grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
 
-testRunnerCommand: mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$test
+# testRunnerCommand: mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$test
+testRunnerCommand: mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$test test site surefire-report:report
