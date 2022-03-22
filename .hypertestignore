@@ -4,3 +4,5 @@ concierge.exe
 *.log
 artifacts
 logs
+m2_cache_dir
+target
