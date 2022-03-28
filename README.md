@@ -90,10 +90,10 @@ testSuiteStep: 150
 
 Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
  
-The target platform is set to Mac. Please set the *[runson]* key to *[win]* if the tests have to be executed on the macOS platform.
+The target platform is set to Win. Please set the *[runson]* key to *[mac]* if the tests have to be executed on the macOS platform.
 
 ```yaml
-runson: mac
+runson: win
 ```
 
 The *matrix* constitutes of the following entries - *classname*. The entries represent the class names in the test code.
@@ -107,7 +107,7 @@ The *testSuites* object contains a list of commands (that can be presented in an
 
 ```yaml
 testSuites:
-  - mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$classname test site surefire-report:report
+  - mvn `-Dmaven.repo.local=$CACHE_DIR `-Dtest=$classname test site surefire-report:report
 ```
 
 ### Pre Steps and Dependency Caching
@@ -126,10 +126,8 @@ cacheDirectories:
 Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the Maven packages are downloaded in the *m2_cache_dir*. To prevent test execution at the *pre* stage, the *maven.test.skip* parameter is set to *true* so that only packages are downloaded and no test execution is performed.
 
 ```yaml
-shell: bash
-
 pre:
-  - mkdir ~/m2_cache_dir
+  - mkdir m2_cache_dir
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 ```
 
@@ -207,7 +205,7 @@ Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
 The *runson* key determines the platform (or operating system) on which the tests are executed. Here we have set the target OS as Windows.
 
 ```yaml
-runson: mac
+runson: win
 ```
 
 Auto-split is set to true in the YAML file.
@@ -230,7 +228,7 @@ Dependency caching is enabled in the YAML file to ensure that the package depend
 
 ```yaml
 env:
-  CACHE_DIR: ~/m2_cache_dir
+  CACHE_DIR: m2_cache_dir
 
 # Dependency caching for Windows
 cacheKey: '{{ checksum "pom.xml" }}'
@@ -244,7 +242,7 @@ Steps (or commands) that must run before the test execution are listed in the *p
 shell: bash
 
 pre:
-  - mkdir ~/m2_cache_dir
+  - mkdir m2_cache_dir
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 ```
 
@@ -275,7 +273,7 @@ Running the above command on the terminal will give a list of scenarios present 
 The *testRunnerCommand* contains the command that is used for triggering the test. The output fetched from the *testDiscoverer* command acts as an input to the *testRunner* command.
 
 ```yaml
-testRunnerCommand: mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$test test site surefire-report:report
+testRunnerCommand: mvn `-Dmaven.repo.local=$CACHE_DIR `-Dtest=$test test site surefire-report:report
 ```
 
 ### Artifacts Management
