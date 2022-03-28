@@ -20,14 +20,14 @@ To know more about how HyperExecute does intelligent Test Orchestration, do chec
    - [Core](#core)
    - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching)
    - [Post Steps](#post-steps)
-   - [Artefacts Management](#artefacts-management)
+   - [Artifacts Management](#artifacts-management)
    - [Test Execution](#test-execution)
 
 * [Auto-Split Execution with JUnit](#auto-split-execution-with-junit)
    - [Core](#core-1)
    - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching-1)
    - [Post Steps](#post-steps-1)
-   - [Artefacts Management](#artefacts-management-1)
+   - [Artifacts Management](#artifacts-management-1)
    - [Test Execution](#test-execution-1)
 
 * [Secrets Management](#secrets-management)
@@ -142,11 +142,11 @@ post:
   - cat yaml/junit_hyperexecute_matrix_sample.yaml
 ```
 
-### Artefacts Management
+### Artifacts Management
 
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artefacts and combing artefacts generated under each task.
+The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
 
-The *uploadArtefacts* directive informs HyperExecute to upload artefacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the site and sure-fire reports (i.e. *target/site/* and *target/surefire-reports/*) directory.
+The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the site and sure-fire reports (i.e. *target/site/* and *target/surefire-reports/*) directory.
 
 ```yaml
 mergeArtifacts: true
@@ -160,17 +160,17 @@ uploadArtefacts:
     - target/surefire-reports/**
 ```
 
-HyperExecute also facilitates the provision to download the artefacts on your local machine. To download the artefacts, click on Artefacts button corresponding to the associated TestID.
+HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
 
-<img width="1425" alt="junit_matrix_artefacts_1" src="https://user-images.githubusercontent.com/1688653/159760344-c473fc2e-7af9-40b5-b930-81fbed5e5820.png">
+<img width="1425" alt="junit_matrix_artefacts_1" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
 
-Now, you can download the artefacts by clicking on the Download button as shown below:
+Now, you can download the artifacts by clicking on the Download button as shown below:
 
-<img width="1425" alt="junit_matrix_artefacts_2" src="https://user-images.githubusercontent.com/1688653/159760366-f8c04069-e4a3-4b82-b1e0-c95022a6d584.png">
+<img width="1425" alt="junit_matrix_artefacts_2" src="https://user-images.githubusercontent.com/1688653/160455432-05c9eb1e-f337-4350-af23-d020a2f1a9a5.png">
 
 ## Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/junit_hyperexecute_matrix_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artefacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/junit_hyperexecute_matrix_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
 
 ```bash
 ./concierge --config yaml/junit_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
@@ -178,7 +178,7 @@ The CLI option *--config* is used for providing the custom HyperExecute YAML fil
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hypertest) to check the status of execution:
 
-<img width="1414" alt="junit_matrix_execution" src="https://user-images.githubusercontent.com/1688653/159760344-c473fc2e-7af9-40b5-b930-81fbed5e5820.png">
+<img width="1414" alt="junit_matrix_execution" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
 
 Shown below is the execution screenshot when the YAML file is triggered from the terminal:
 
@@ -278,11 +278,11 @@ The *testRunnerCommand* contains the command that is used for triggering the tes
 testRunnerCommand: mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$test test site surefire-report:report
 ```
 
-### Artefacts Management
+### Artifacts Management
 
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artefacts and combing artefacts generated under each task.
+The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
 
-The *uploadArtefacts* directive informs HyperExecute to upload artefacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the site and sure-fire reports (i.e. *target/site/* and *target/surefire-reports/*) directory.
+The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the site and sure-fire reports (i.e. *target/site/* and *target/surefire-reports/*) directory.
 
 ```yaml
 mergeArtifacts: true
@@ -296,17 +296,17 @@ uploadArtefacts:
     - target/surefire-reports/**
 ```
 
-HyperExecute also facilitates the provision to download the artefacts on your local machine. To download the artefacts, click on Artefacts button corresponding to the associated TestID.
+HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
 
-<img width="1425" alt="junit_autosplit_artefacts_1" src="https://user-images.githubusercontent.com/1688653/159760901-3777b061-5f12-4968-aa1f-925230848b4d.png">
+<img width="1425" alt="junit_autosplit_artefacts_1" src="https://user-images.githubusercontent.com/1688653/160455437-7871ba51-e46c-4bb0-8d34-48097ec427f9.png">
 
-Now, you can download the artefacts by clicking on the Download button as shown below:
+Now, you can download the artifacts by clicking on the Download button as shown below:
 
-<img width="1425" alt="junit_autosplit_artefacts_2" src="https://user-images.githubusercontent.com/1688653/159760924-f02979e1-38e8-43ca-802c-84a81831e35a.png">
+<img width="1425" alt="junit_autosplit_artefacts_2" src="https://user-images.githubusercontent.com/1688653/160455442-a2335e56-323c-46df-b75a-a7f21937719f.png">
 
 ### Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/junit_hyperexecute_autosplit_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artefacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/junit_hyperexecute_autosplit_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
 
 ```bash
 ./concierge --config yaml/junit_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
@@ -314,7 +314,7 @@ The CLI option *--config* is used for providing the custom HyperExecute YAML fil
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hypertest) to check the status of execution
 
-<img width="1414" alt="junit_autosplit_execution" src="https://user-images.githubusercontent.com/1688653/159760901-3777b061-5f12-4968-aa1f-925230848b4d.png">
+<img width="1414" alt="junit_autosplit_execution" src="https://user-images.githubusercontent.com/1688653/160455437-7871ba51-e46c-4bb0-8d34-48097ec427f9.png">
 
 Shown below is the execution screenshot when the YAML file is triggered from the terminal:
 
@@ -345,7 +345,7 @@ HyperExecute lets you navigate from/to *Test Logs* in Automation Dashboard from/
 
 Shown below is the HyperExecute Automation dashboard which also lists the tests that were executed as a part of the test suite:
 
-<img width="1429" alt="junit_hypertest_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/159760344-c473fc2e-7af9-40b5-b930-81fbed5e5820.png">
+<img width="1429" alt="junit_hypertest_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
 
 Here is a screenshot that lists the automation test that was executed on the HyperExecute grid:
 
