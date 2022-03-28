@@ -126,10 +126,10 @@ public class ToDoTest
     static Stream<Arguments> browser()
     {
         return Stream.of(
-                arguments("Chrome", "latest", "MacOS Catalina",
+                arguments("Chrome", "latest-1", "Windows 10",
                         "[Test - 1] JUnit tests on HyperExecute Grid",
                         "[Test - 1] JUnit tests on HyperExecute Grid"),
-                arguments("Firefox", "latest", "MacOS Catalina",
+                arguments("Firefox", "latest-2", "Windows 10",
                         "[Test - 2] JUnit tests on HyperExecute Grid",
                         "[Test - 2] JUnit tests on HyperExecute Grid")
         );

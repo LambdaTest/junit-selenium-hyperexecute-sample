@@ -4,7 +4,7 @@ globalTimeout: 150
 testSuiteTimeout: 150
 testSuiteStep: 150
 
-runson: mac
+runson: win
 retryOnFailure: true
 
 maxRetries: 5
@@ -12,7 +12,7 @@ concurrency: 4
 
 env:
   # PAT: ${{ .secrets.testKey }}
-  CACHE_DIR: ~/m2_cache_dir
+  CACHE_DIR: m2_cache_dir
 
 # Dependency caching for Windows
 cacheKey: '{{ checksum "pom.xml" }}'
@@ -22,11 +22,11 @@ cacheDirectories:
 matrix:
   classname: ["ToDoTest", "SelPlayGroundTest1", "SelPlayGroundTest2" ]
 
-shell: bash
+# shell: bash
 
 pre:
   # Create the Cache directory
-  - mkdir ~/m2_cache_dir
+  - mkdir m2_cache_dir
   # Download and install packages in the CACHE_DIR.
   # Skip execution of the tests in the pre step
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
@@ -45,4 +45,4 @@ uploadArtefacts:
     - target/surefire-reports/**
 
 testSuites:
-  - mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$classname test site surefire-report:report
+  - mvn `-Dmaven.repo.local=$CACHE_DIR `-Dtest=$classname test site surefire-report:report
