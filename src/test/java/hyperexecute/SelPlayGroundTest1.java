@@ -126,10 +126,10 @@ public class SelPlayGroundTest1
     static Stream<Arguments> browser()
     {
         return Stream.of(
-                arguments("Chrome", "latest", "Windows 11",
+                arguments("Chrome", "latest", "Windows 10",
                         "[Test - 3] JUnit tests on HyperExecute Grid",
                         "[Test - 3] JUnit tests on HyperExecute Grid"),
-                arguments("Firefox", "latest", "Windows 11",
+                arguments("Firefox", "latest", "Windows 10",
                         "[Test - 4] JUnit tests on HyperExecute Grid",
                         "[Test - 4] JUnit tests on HyperExecute Grid")
         );
