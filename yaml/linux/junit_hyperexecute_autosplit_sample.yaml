@@ -4,7 +4,7 @@ globalTimeout: 150
 testSuiteTimeout: 150
 testSuiteStep: 150
 
-runson: win
+runson: linux
 
 autosplit: true
 retryOnFailure: true
@@ -15,13 +15,13 @@ concurrency: 4
 env:
   # PAT: ${{ .secrets.testKey }}
   CACHE_DIR: m2_cache_dir
+  TARGET_OS: linux
 
-# Dependency caching for Windows
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
   - $CACHE_DIR
 
-# shell: bash
+shell: bash
 
 pre:
   # Create the Cache directory
@@ -31,15 +31,15 @@ pre:
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 
 post:
-  - cat yaml/junit_hyperexecute_autosplit_sample.yaml
+  - cat yaml/linux/junit_hyperexecute_autosplit_sample.yaml
 
 mergeArtifacts: true
 
 uploadArtefacts:
- - name: Final Report
+ - name: Final-Report
    path:
     - target/site/**
- - name: Surefire Report
+ - name: Surefire-Report
    path:
     - target/surefire-reports/**
 
@@ -48,5 +48,4 @@ testDiscovery:
   mode: static
   command: grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
 
-# testRunnerCommand: mvn -Dmaven.repo.local=$CACHE_DIR -Dtest=$test
-testRunnerCommand: mvn `-Dmaven.repo.local=$CACHE_DIR `-Dtest=$test test site surefire-report:report
+testRunnerCommand: mvn -Dplatname=linux -Dmaven.repo.local=m2_cache_dir -Dtest=$test test site surefire-report:report

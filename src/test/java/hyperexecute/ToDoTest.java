@@ -16,10 +16,11 @@ import org.junit.jupiter.api.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 @Execution(ExecutionMode.CONCURRENT)
-public class ToDoTest
-{
+public class ToDoTest {
     /*  protected static ChromeDriver driver; */
     protected WebDriver driver = null;
     static String URL = "https://lambdatest.github.io/sample-todo-app/";
@@ -31,20 +32,17 @@ public class ToDoTest
             System.getenv("LT_ACCESS_KEY");
 
     @BeforeAll
-    public static void start()
-    {
+    public static void start() {
         System.out.println("Running JUnit test on HyperExecute Grid");
     }
 
     @BeforeEach
-    public void setup()
-    {
+    public void setup() {
         System.out.println("Setting up resources to run tests on HyperExecute Grid");
     }
 
     public void SetUpBrowser(String browserName, String version, String platform,
-                             String build, String name)
-    {
+                             String build, String name) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         capabilities.setCapability("browserName", browserName);
@@ -57,25 +55,23 @@ public class ToDoTest
         capabilities.setCapability("video", true);
         capabilities.setCapability("console", true);
 
-        try
-        {
+        try {
             driver = new RemoteWebDriver(new URL("https://" + user_name + ":" + access_key + gridURL), capabilities);
-        }
-        catch (MalformedURLException e)
-        {
+        } catch (MalformedURLException e) {
             System.out.println("Invalid grid URL");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     @ParameterizedTest
-    @MethodSource("browser")
+    @MethodSource("setup_testEnvironment")
+    /*
+    @ParameterizedTest(name = "{index} => browserName={0}, version={1}, platform={2}, build={3}, name={4}")
+    @CsvFileSource(resources = "/test-combinations/linux/junit-test-data.csv")
+    */
     public void test_ToDo(String browserName, String version, String platform,
-                             String build, String name)
-    {
+                          String build, String name) {
         SetUpBrowser(browserName, version, platform, build, name);
 
         String methodName = Thread.currentThread()
@@ -87,8 +83,7 @@ public class ToDoTest
 
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
 
-        try
-        {
+        try {
             /* Let's mark done first two items in the list. */
             driver.findElement(By.name("li1")).click();
             driver.findElement(By.name("li2")).click();
@@ -99,39 +94,38 @@ public class ToDoTest
 
             /* Let's check that the item we added is added in the list. */
             String enteredText = driver.findElement(By.xpath("//span[.='Happy Testing at LambdaTest']")).getText();
-            if (enteredText.equals("Happy Testing at LambdaTest"))
-            {
+            if (enteredText.equals("Happy Testing at LambdaTest")) {
                 System.out.println("JUnit demo on HyperExecute Grid is successful");
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     @AfterEach
-    public void TearDownClass()
-    {
+    public void TearDownClass() {
         driver.quit();
         System.out.println("Browser resources released");
     }
 
     @AfterAll
-    public static void endTest()
-    {
+    public static void endTest() {
         System.out.println("JUnit execution on HyperExecute Grid complete");
     }
 
-    static Stream<Arguments> browser()
+    /* The data is not being read from CSV file */
+    static Stream<Arguments> setup_testEnvironment()
     {
+        String platform_name = System.getenv("TARGET_OS");
+        System.out.println(platform_name);
+
         return Stream.of(
-                arguments("Chrome", "latest-1", "Windows 10",
-                        "[Test - 1] JUnit tests on HyperExecute Grid",
-                        "[Test - 1] JUnit tests on HyperExecute Grid"),
-                arguments("Firefox", "latest-2", "Windows 10",
-                        "[Test - 2] JUnit tests on HyperExecute Grid",
-                        "[Test - 2] JUnit tests on HyperExecute Grid")
+            arguments("Chrome", "latest-1", platform_name,
+                    "[Test - 1] JUnit tests on HyperExecute Grid",
+                    "[Test - 1] JUnit tests on HyperExecute Grid"),
+            arguments("Firefox", "latest-2", platform_name,
+                    "[Test - 2] JUnit tests on HyperExecute Grid",
+                    "[Test - 2] JUnit tests on HyperExecute Grid")
         );
     }
 }

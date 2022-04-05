@@ -5,6 +5,8 @@ testSuiteTimeout: 150
 testSuiteStep: 150
 
 runson: win
+
+autosplit: true
 retryOnFailure: true
 
 maxRetries: 5
@@ -13,14 +15,12 @@ concurrency: 4
 env:
   # PAT: ${{ .secrets.testKey }}
   CACHE_DIR: m2_cache_dir
+  TARGET_OS: Windows 10
 
 # Dependency caching for Windows
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
   - $CACHE_DIR
-
-matrix:
-  classname: ["ToDoTest", "SelPlayGroundTest1", "SelPlayGroundTest2" ]
 
 # shell: bash
 
@@ -32,17 +32,21 @@ pre:
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 
 post:
-  - cat yaml/junit_hyperexecute_matrix_sample.yaml
+  - cat yaml/win/junit_hyperexecute_autosplit_sample.yaml
 
 mergeArtifacts: true
 
 uploadArtefacts:
- - name: Final Report
+ - name: Final-Report
    path:
     - target/site/**
- - name: Surefire Report
+ - name: Surefire-Report
    path:
     - target/surefire-reports/**
 
-testSuites:
-  - mvn `-Dmaven.repo.local=$CACHE_DIR `-Dtest=$classname test site surefire-report:report
+testDiscovery:
+  type: raw
+  mode: static
+  command: grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
+
+testRunnerCommand: mvn `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dtest=$test test site surefire-report:report

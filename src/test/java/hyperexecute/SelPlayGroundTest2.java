@@ -16,6 +16,8 @@ import org.junit.jupiter.api.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 @Execution(ExecutionMode.CONCURRENT)
 public class SelPlayGroundTest2
@@ -29,6 +31,7 @@ public class SelPlayGroundTest2
             System.getenv("LT_USERNAME");
     String access_key = System.getenv("LT_ACCESS_KEY") == null ? "LT_ACCESS_KEY" :
             System.getenv("LT_ACCESS_KEY");
+    String test_platform = System.getenv("TEST_OS");
 
     @BeforeAll
     public static void start()
@@ -72,7 +75,11 @@ public class SelPlayGroundTest2
     }
 
     @ParameterizedTest
-    @MethodSource("browser")
+    @MethodSource("setup_testEnvironment")
+    /*
+    @ParameterizedTest(name = "{index} => browserName={0}, version={1}, platform={2}, build={3}, name={4}")
+    @CsvFileSource(resources = "/test-combinations/linux/junit-test-data.csv")
+    */
     public void test_SelPlayground2(String browserName, String version, String platform,
                              String build, String name)
     {
@@ -123,15 +130,19 @@ public class SelPlayGroundTest2
         System.out.println("JUnit execution on HyperExecute Grid complete");
     }
 
-    static Stream<Arguments> browser()
+    /* The data is not being read from CSV file */
+    static Stream<Arguments> setup_testEnvironment()
     {
+        String platform_name = System.getenv("TARGET_OS");
+        System.out.println(platform_name);
+
         return Stream.of(
-                arguments("Chrome", "latest", "Windows 10",
-                        "[Test - 5] JUnit tests on HyperExecute Grid",
-                        "[Test - 5] JUnit tests on HyperExecute Grid"),
-                arguments("Firefox", "latest-1", "Windows 10",
-                        "[Test - 6] JUnit tests on HyperExecute Grid",
-                        "[Test - 6] JUnit tests on HyperExecute Grid")
+            arguments("Chrome", "latest-2", platform_name,
+                    "[Test - 5] JUnit tests on HyperExecute Grid",
+                    "[Test - 5] JUnit tests on HyperExecute Grid"),
+            arguments("Firefox", "latest", platform_name,
+                    "[Test - 6] JUnit tests on HyperExecute Grid",
+                    "[Test - 6] JUnit tests on HyperExecute Grid")
         );
     }
 }

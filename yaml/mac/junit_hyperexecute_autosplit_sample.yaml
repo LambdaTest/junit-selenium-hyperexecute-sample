@@ -1,0 +1,52 @@
+---
+version: 0.1
+globalTimeout: 150
+testSuiteTimeout: 150
+testSuiteStep: 150
+
+runson: mac
+
+autosplit: true
+retryOnFailure: true
+
+maxRetries: 5
+concurrency: 4
+
+env:
+  # PAT: ${{ .secrets.testKey }}
+  CACHE_DIR: m2_cache_dir
+  TARGET_OS: MacOS Catalina
+
+# Dependency caching for Windows
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - $CACHE_DIR
+
+shell: bash
+
+pre:
+  # Create the Cache directory
+  - mkdir m2_cache_dir
+  # Download and install packages in the CACHE_DIR.
+  # Skip execution of the tests in the pre step
+  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
+
+post:
+  - cat yaml/mac/junit_hyperexecute_autosplit_sample.yaml
+
+mergeArtifacts: true
+
+uploadArtefacts:
+ - name: Final-Report
+   path:
+    - target/site/**
+ - name: Surefire-Report
+   path:
+    - target/surefire-reports/**
+
+testDiscovery:
+  type: raw
+  mode: static
+  command: grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
+
+testRunnerCommand: mvn -Dplatname=mac -Dmaven.repo.local=m2_cache_dir -Dtest=$test test site surefire-report:report

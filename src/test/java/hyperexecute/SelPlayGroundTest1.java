@@ -1,5 +1,8 @@
 package hyperexecute;
 
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,11 +19,12 @@ import org.junit.jupiter.api.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 @Execution(ExecutionMode.CONCURRENT)
 public class SelPlayGroundTest1
 {
-    /*  protected static ChromeDriver driver; */
     protected WebDriver driver = null;
     static String URL = "https://lambdatest.github.io/sample-todo-app/";
     public static String status = "passed";
@@ -29,6 +33,8 @@ public class SelPlayGroundTest1
             System.getenv("LT_USERNAME");
     String access_key = System.getenv("LT_ACCESS_KEY") == null ? "LT_ACCESS_KEY" :
             System.getenv("LT_ACCESS_KEY");
+    String test_platform = System.getenv("TEST_OS");
+    public static String csv_source = "/test-combinations/win/junit-test-data.csv";
 
     @BeforeAll
     public static void start()
@@ -69,12 +75,18 @@ public class SelPlayGroundTest1
         {
             System.out.println(e.getMessage());
         }
+
+        csv_source = "/test-combinations/win/junit-test-data.csv";
     }
 
     @ParameterizedTest
-    @MethodSource("browser")
-    public void test_SelPlayground1(String browserName, String version, String platform,
-                             String build, String name)
+    @MethodSource("setup_testEnvironment")
+    /*
+    @ParameterizedTest(name = "{index} => browserName={0}, version={1}, platform={2}, build={3}, name={4}")
+    @CsvFileSource(resources = "/test-combinations/win/junit-test-data.csv")
+    */
+    public void test_SelPlayground(String browserName, String version, String platform,
+                                     String build, String name)
     {
         SetUpBrowser(browserName, version, platform, build, name);
 
@@ -123,15 +135,19 @@ public class SelPlayGroundTest1
         System.out.println("JUnit execution on HyperExecute Grid complete");
     }
 
-    static Stream<Arguments> browser()
+    /* The data is not being read from CSV file */
+    static Stream<Arguments> setup_testEnvironment()
     {
+        String platform_name = System.getenv("TARGET_OS");
+        System.out.println(platform_name);
+
         return Stream.of(
-                arguments("Chrome", "latest", "Windows 10",
-                        "[Test - 3] JUnit tests on HyperExecute Grid",
-                        "[Test - 3] JUnit tests on HyperExecute Grid"),
-                arguments("Firefox", "latest", "Windows 10",
-                        "[Test - 4] JUnit tests on HyperExecute Grid",
-                        "[Test - 4] JUnit tests on HyperExecute Grid")
+            arguments("Microsoft Edge", "latest", platform_name,
+                    "[Test - 3] JUnit tests on HyperExecute Grid",
+                    "[Test - 3] JUnit tests on HyperExecute Grid"),
+            arguments("Microsoft Edge", "latest-1", platform_name,
+                    "[Test - 4] JUnit tests on HyperExecute Grid",
+                    "[Test - 4] JUnit tests on HyperExecute Grid")
         );
     }
 }

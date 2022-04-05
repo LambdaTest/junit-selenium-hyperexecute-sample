@@ -1,0 +1,49 @@
+---
+version: 0.1
+globalTimeout: 150
+testSuiteTimeout: 150
+testSuiteStep: 150
+
+runson: mac
+retryOnFailure: true
+
+maxRetries: 5
+concurrency: 4
+
+env:
+  # PAT: ${{ .secrets.testKey }}
+  CACHE_DIR: m2_cache_dir
+  TARGET_OS: MacOS Catalina
+
+# Dependency caching for Windows
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - $CACHE_DIR
+
+matrix:
+  classname: ["ToDoTest", "SelPlayGroundTest1", "SelPlayGroundTest2" ]
+
+shell: bash
+
+pre:
+  # Create the Cache directory
+  - mkdir m2_cache_dir
+  # Download and install packages in the CACHE_DIR.
+  # Skip execution of the tests in the pre step
+  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
+
+post:
+  - cat yaml/mac/junit_hyperexecute_matrix_sample.yaml
+
+mergeArtifacts: true
+
+uploadArtefacts:
+ - name: Final-Report
+   path:
+    - target/site/**
+ - name: Surefire-Report
+   path:
+    - target/surefire-reports/**
+
+testSuites:
+  - mvn -Dplatname=mac -Dmaven.repo.local=m2_cache_dir -Dtest=$classname test site surefire-report:report
