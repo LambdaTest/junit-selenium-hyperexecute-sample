@@ -16,14 +16,14 @@ To know more about how HyperExecute does intelligent Test Orchestration, do chec
    - [Download HyperExecute CLI](#download-hyperexecute-cli)
    - [Configure Environment Variables](#configure-environment-variables)
 
-* [Matrix Execution with JUnit](#matrix-execution-with-junit)
+* [Auto-Split Execution with JUnit](#auto-split-execution-with-junit)
    - [Core](#core)
    - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching)
    - [Post Steps](#post-steps)
    - [Artifacts Management](#artifacts-management)
    - [Test Execution](#test-execution)
 
-* [Auto-Split Execution with JUnit](#auto-split-execution-with-junit)
+* [Matrix Execution with JUnit](#matrix-execution-with-junit)
    - [Core](#core-1)
    - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching-1)
    - [Post Steps](#post-steps-1)
@@ -71,150 +71,6 @@ For Windows:
 set LT_USERNAME=LT_USERNAME
 set LT_ACCESS_KEY=LT_ACCESS_KEY
 ```
-
-The <b>HYPERXECUTE_PLATFORM</b> environment variable must be set to the platform (or operating system) on which you wish to perform the test execution. Here are the values that can be assigned to HYPEREXECUTE_PLATFORM
-
-* win10 for Windows OS
-* linux for Linux OS
-* macOS Catalina for macOS
-
-Use the commands mentioned below, to set the HyperExecute Platform (i.e. HYPEREXECUTE_PLATFORM) to Linux, macOS, or Windows respectively:
-
-Host OS: Linux
-
-```bash
-export HYPERXECUTE_PLATFORM=win10
-export HYPERXECUTE_PLATFORM=linux
-export HYPERXECUTE_PLATFORM=macOS Catalina
-```
-
-Host OS: macOS
-
-```bash
-export HYPERXECUTE_PLATFORM=win10
-export HYPERXECUTE_PLATFORM=linux
-export HYPERXECUTE_PLATFORM=macOS Catalina
-```
-
-Host OS: Windows
-
-```bash
-set HYPERXECUTE_PLATFORM=wind10
-set HYPERXECUTE_PLATFORM=linux
-set HYPERXECUTE_PLATFORM=macOS Catalina
-```
-
-# Matrix Execution with JUnit
-
-Matrix-based test execution is used for running the same tests across different test (or input) combinations. The Matrix directive in HyperExecute YAML file is a *key:value* pair where value is an array of strings.
-
-Also, the *key:value* pairs are opaque strings for HyperExecute. For more information about matrix multiplexing, check out the [Matrix Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/#matrix-based-build-multiplexing)
-
-### Core
-
-In the current example, matrix YAML file (*yaml/junit_hyperexecute_matrix_sample.yaml*) in the repo contains the following configuration:
-
-```yaml
-globalTimeout: 150
-testSuiteTimeout: 150
-testSuiteStep: 150
-```
-
-Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
- 
-The target platform is set to Win. Please set the *[runson]* key to *[mac]* if the tests have to be executed on the macOS platform.
-
-```yaml
-runson: win
-```
-
-The *matrix* constitutes of the following entries - *classname*. The entries represent the class names in the test code.
-
-```yaml
-matrix:
-  classname: ["ToDoTest", "SelPlayGroundTest1", "SelPlayGroundTest2" ]
-```
-
-The *testSuites* object contains a list of commands (that can be presented in an array). In the current YAML file, commands for executing the tests are put in an array (with a '-' preceding each item). The Maven command *mvn test* is used to run tests located in the current project. In the current project, parallel execution is achieved at the *class* level. The *maven.repo.local* parameter in Maven is used for overriding the location where the dependent Maven packages are downloaded.
-
-```yaml
-testSuites:
-  - mvn `-Dmaven.repo.local=$CACHE_DIR `-Dtest=$classname test site surefire-report:report
-```
-
-### Pre Steps and Dependency Caching
-
-Dependency caching is enabled in the YAML file to ensure that the package dependencies are not downloaded in subsequent runs. The first step is to set the Key used to cache directories. The directory *m2_cache_dir* is created in the project's root directory.
-
-```yaml
-env:
-  CACHE_DIR: ~/m2_cache_dir
-
-cacheKey: '{{ checksum "pom.xml" }}'
-cacheDirectories:
-  - $CACHE_DIR
-```
-
-Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the Maven packages are downloaded in the *m2_cache_dir*. To prevent test execution at the *pre* stage, the *maven.test.skip* parameter is set to *true* so that only packages are downloaded and no test execution is performed.
-
-```yaml
-pre:
-  - mkdir m2_cache_dir
-  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
-```
-
-### Post Steps
-
-Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/junit_hyperexecute_matrix_sample.yaml*
-
-```yaml
-post:
-  - cat yaml/junit_hyperexecute_matrix_sample.yaml
-```
-
-### Artifacts Management
-
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
-
-The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the site and sure-fire reports (i.e. *target/site/* and *target/surefire-reports/*) directory.
-
-```yaml
-mergeArtifacts: true
-
-uploadArtefacts:
- - name: Final Report
-   path:
-    - target/site/**
- - name: Surefire Report
-   path:
-    - target/surefire-reports/**
-```
-
-HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
-
-<img width="1425" alt="junit_matrix_artefacts_1" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
-
-Now, you can download the artifacts by clicking on the Download button as shown below:
-
-<img width="1425" alt="junit_matrix_artefacts_2" src="https://user-images.githubusercontent.com/1688653/160455432-05c9eb1e-f337-4350-af23-d020a2f1a9a5.png">
-
-## Test Execution
-
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/junit_hyperexecute_matrix_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
-
-```bash
-./hyperexecute --config yaml/junit_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
-```
-
-Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution:
-
-<img width="1414" alt="junit_matrix_execution" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
-
-Shown below is the execution screenshot when the YAML file is triggered from the terminal:
-
-<img width="1413" alt="junit_cli1_execution" src="https://user-images.githubusercontent.com/1688653/159760380-7d633a1f-dacc-4851-8142-95dbf25cef8a.png">
-
-<img width="1101" alt="junit_cli2_execution" src="https://user-images.githubusercontent.com/1688653/159760390-4429ff96-7056-4318-911a-972d4570185f.png">
 
 ## Auto-Split Execution with JUnit
 
@@ -336,10 +192,22 @@ Now, you can download the artifacts by clicking on the Download button as shown 
 
 ### Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/junit_hyperexecute_autosplit_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/junit_hyperexecute_autosplit_sample.yaml* for Windows and *yaml/linux/junit_hyperexecute_autosplit_sample.yaml* for Linux).
+
+#### Execute JUnit tests using Autosplit mechanism on Windows platform
+
+Run the following command on the terminal to trigger the tests in Java files with HyperExecute platform set to Windows. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
 
 ```bash
-./hyperexecute --config yaml/junit_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
+./hyperexecute --config yaml/win/junit_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
+```
+
+#### Execute JUnit tests using Autosplit mechanism on Linux platform
+
+Run the following command on the terminal to trigger the tests in Java files with HyperExecute platform set to Linux. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+
+```bash
+./hyperexecute --config yaml/linux/junit_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
 ```
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution
@@ -351,6 +219,130 @@ Shown below is the execution screenshot when the YAML file is triggered from the
 <img width="1412" alt="junit_autosplit_cli1_execution" src="https://user-images.githubusercontent.com/1688653/159760928-d0816808-e25f-45aa-bacb-4e17312ad4e3.png">
 
 <img width="1408" alt="junit_autosplit_cli2_execution" src="https://user-images.githubusercontent.com/1688653/159760937-5cf297de-5182-469b-9a88-bec78383da1d.png">
+
+# Matrix Execution with JUnit
+
+Matrix-based test execution is used for running the same tests across different test (or input) combinations. The Matrix directive in HyperExecute YAML file is a *key:value* pair where value is an array of strings.
+
+Also, the *key:value* pairs are opaque strings for HyperExecute. For more information about matrix multiplexing, check out the [Matrix Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/#matrix-based-build-multiplexing)
+
+### Core
+
+In the current example, matrix YAML file (*yaml/junit_hyperexecute_matrix_sample.yaml*) in the repo contains the following configuration:
+
+```yaml
+globalTimeout: 150
+testSuiteTimeout: 150
+testSuiteStep: 150
+```
+
+Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
+ 
+The target platform is set to Win. Please set the *[runson]* key to *[mac]* if the tests have to be executed on the macOS platform.
+
+```yaml
+runson: win
+```
+
+The *matrix* constitutes of the following entries - *classname*. The entries represent the class names in the test code.
+
+```yaml
+matrix:
+  classname: ["ToDoTest", "SelPlayGroundTest1", "SelPlayGroundTest2" ]
+```
+
+The *testSuites* object contains a list of commands (that can be presented in an array). In the current YAML file, commands for executing the tests are put in an array (with a '-' preceding each item). The Maven command *mvn test* is used to run tests located in the current project. In the current project, parallel execution is achieved at the *class* level. The *maven.repo.local* parameter in Maven is used for overriding the location where the dependent Maven packages are downloaded.
+
+```yaml
+testSuites:
+  - mvn `-Dmaven.repo.local=$CACHE_DIR `-Dtest=$classname test site surefire-report:report
+```
+
+### Pre Steps and Dependency Caching
+
+Dependency caching is enabled in the YAML file to ensure that the package dependencies are not downloaded in subsequent runs. The first step is to set the Key used to cache directories. The directory *m2_cache_dir* is created in the project's root directory.
+
+```yaml
+env:
+  CACHE_DIR: ~/m2_cache_dir
+
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - $CACHE_DIR
+```
+
+Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the Maven packages are downloaded in the *m2_cache_dir*. To prevent test execution at the *pre* stage, the *maven.test.skip* parameter is set to *true* so that only packages are downloaded and no test execution is performed.
+
+```yaml
+pre:
+  - mkdir m2_cache_dir
+  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
+```
+
+### Post Steps
+
+Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/junit_hyperexecute_matrix_sample.yaml*
+
+```yaml
+post:
+  - cat yaml/junit_hyperexecute_matrix_sample.yaml
+```
+
+### Artifacts Management
+
+The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
+
+The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the site and sure-fire reports (i.e. *target/site/* and *target/surefire-reports/*) directory.
+
+```yaml
+mergeArtifacts: true
+
+uploadArtefacts:
+ - name: Final Report
+   path:
+    - target/site/**
+ - name: Surefire Report
+   path:
+    - target/surefire-reports/**
+```
+
+HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
+
+<img width="1425" alt="junit_matrix_artefacts_1" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
+
+Now, you can download the artifacts by clicking on the Download button as shown below:
+
+<img width="1425" alt="junit_matrix_artefacts_2" src="https://user-images.githubusercontent.com/1688653/160455432-05c9eb1e-f337-4350-af23-d020a2f1a9a5.png">
+
+## Test Execution
+
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/junit_hyperexecute_matrix_sample.yaml* for Windows and *yaml/linux/junit_hyperexecute_matrix_sample.yaml* for Linux).
+
+#### Execute JUnit tests using Matrix mechanism on Windows platform
+
+Run the following command on the terminal to trigger the tests in Java files with HyperExecute platform set to Windows. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+
+```bash
+./hyperexecute --config yaml/win/junit_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
+```
+
+#### Execute JUnit tests using Matrix mechanism on Linux platform
+
+Run the following command on the terminal to trigger the tests in Java files with HyperExecute platform set to Linux. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+
+```bash
+./hyperexecute --config yaml/linux/junit_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
+```
+
+Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution:
+
+<img width="1414" alt="junit_matrix_execution" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
+
+Shown below is the execution screenshot when the YAML file is triggered from the terminal:
+
+<img width="1413" alt="junit_cli1_execution" src="https://user-images.githubusercontent.com/1688653/159760380-7d633a1f-dacc-4851-8142-95dbf25cef8a.png">
+
+<img width="1101" alt="junit_cli2_execution" src="https://user-images.githubusercontent.com/1688653/159760390-4429ff96-7056-4318-911a-972d4570185f.png">
 
 ## Secrets Management
 
