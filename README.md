@@ -149,7 +149,6 @@ Steps (or commands) that must run before the test execution are listed in the *p
 shell: bash
 
 pre:
-  - mkdir m2_cache_dir
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 ```
 
@@ -294,7 +293,6 @@ Steps (or commands) that must run before the test execution are listed in the *p
 
 ```yaml
 pre:
-  - mkdir m2_cache_dir
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 ```
 
