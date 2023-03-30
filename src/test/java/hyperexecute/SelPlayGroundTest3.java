@@ -16,10 +16,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+
 @Execution(ExecutionMode.CONCURRENT)
 @TestMethodOrder(MethodOrderer.MethodName.class)
-public class SelPlayGroundTest2
-{
+public class SelPlayGroundTest3 {
     /*  protected static ChromeDriver driver; */
     protected RemoteWebDriver driver = null;
     static String URL = "https://www.lambdatest.com/selenium-playground/";
@@ -29,23 +29,19 @@ public class SelPlayGroundTest2
             System.getenv("LT_USERNAME");
     String access_key = System.getenv("LT_ACCESS_KEY") == null ? "LT_ACCESS_KEY" :
             System.getenv("LT_ACCESS_KEY");
-    String test_platform = System.getenv("TEST_OS");
 
     @BeforeAll
-    public static void start()
-    {
+    public static void start() {
         System.out.println("Running JUnit test on HyperExecute Grid");
     }
 
     @BeforeEach
-    public void setup()
-    {
+    public void setup() {
         System.out.println("Setting up resources to run tests on HyperExecute Grid");
     }
 
     public void SetUpBrowser(String browserName, String version, String platform,
-                             String build, String name)
-    {
+                             String build, String name) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         capabilities.setCapability("browserName", browserName);
@@ -58,25 +54,24 @@ public class SelPlayGroundTest2
         capabilities.setCapability("video", true);
         capabilities.setCapability("console", true);
 
-        try
-        {
+        try {
             driver = new RemoteWebDriver(new URL("https://" + user_name + ":" + access_key + gridURL), capabilities);
-        }
-        catch (MalformedURLException e)
-        {
+        } catch (MalformedURLException e) {
             System.out.println("Invalid grid URL");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     @ParameterizedTest
     @MethodSource("setup_testEnvironment")
-    public void test_SelPlayground2(String browserName, String version, String platform, String build, String name)
-    {
+    /*
+    @ParameterizedTest(name = "{index} => browserName={0}, version={1}, platform={2}, build={3}, name={4}")
+    @CsvFileSource(resources = "/test-combinations/linux/junit-test-data.csv")
+    */
+    public void test_ToDo(String browserName, String version, String platform, String build, String name) {
         SetUpBrowser(browserName, version, platform, build, name);
+
 
         driver.navigate().to(URL);
         driver.manage().window().maximize();
@@ -138,8 +133,18 @@ public class SelPlayGroundTest2
             
             driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[1]")).click();
             driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[2]")).click();
             driver.findElement(By.cssSelector("#buttoncheck")).click();
             
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[3]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
             driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
             driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
             driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[3]")).click();
@@ -149,8 +154,11 @@ public class SelPlayGroundTest2
             driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[1]")).click();
             driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[2]")).click();
             driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/button[1]")).click();
-            
-             /*Navigating to different pages from side menu*/
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/button[1]")).click();
+           
+            /*Navigating to different pages from side menu*/
             js.executeScript("window.scrollBy(0,-500)", "");
             driver.findElement(By.linkText("Select Dropdown List")).click();
             driver.findElement(By.linkText("Input Form Submit")).click();
@@ -164,7 +172,7 @@ public class SelPlayGroundTest2
             driver.findElement(By.linkText("Table Data Download")).click();
             driver.findElement(By.linkText("Table Pagination")).click();
             driver.findElement(By.linkText("Table Data Search")).click();
-
+            
             status= "passed";
         }
         catch (Exception e)
@@ -175,16 +183,14 @@ public class SelPlayGroundTest2
     }
 
     @AfterEach
-    public void TearDownClass()
-    {
+    public void TearDownClass() {
         ((JavascriptExecutor) driver).executeScript("lambda-status=" + status);
         driver.quit();
         System.out.println("Browser resources released");
     }
 
     @AfterAll
-    public static void endTest()
-    {
+    public static void endTest() {
         System.out.println("JUnit execution on HyperExecute Grid complete");
     }
 
@@ -195,12 +201,12 @@ public class SelPlayGroundTest2
         System.out.println(platform_name);
 
         return Stream.of(
-            arguments("Chrome", "latest-2", platform_name,
-                    "[Test - 3] JUnit tests on HyperExecute Grid",
-                    "[Test - 3] JUnit tests on HyperExecute Grid"),
-            arguments("Firefox", "latest", platform_name,
-                    "[Test - 4] JUnit tests on HyperExecute Grid",
-                    "[Test - 4] JUnit tests on HyperExecute Grid")
+            arguments("Chrome", "latest-1", platform_name,
+                    "[Test - 5] JUnit tests on HyperExecute Grid",
+                    "[Test - 5] JUnit tests on HyperExecute Grid"),
+            arguments("Firefox", "latest-2", platform_name,
+                    "[Test - 6] JUnit tests on HyperExecute Grid",
+                    "[Test - 6] JUnit tests on HyperExecute Grid")
         );
     }
 }

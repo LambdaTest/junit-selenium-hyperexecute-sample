@@ -106,7 +106,7 @@
                 <configuration>
                     <properties>
                         <configurationParameters>
-                            junit.jupiter.execution.parallel.enabled=true
+                            junit.jupiter.execution.parallel.enabled=false
                             junit.jupiter.execution.parallel.config.strategy=dynamic
                         </configurationParameters>
                     </properties>

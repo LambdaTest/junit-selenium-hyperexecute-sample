@@ -1,33 +1,30 @@
 package hyperexecute;
 
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
-import org.junit.jupiter.api.condition.EnabledOnOs;
-import org.junit.jupiter.api.condition.OS;
+
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.JavascriptExecutor;
 
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.params.provider.CsvFileSource;
 
 @Execution(ExecutionMode.CONCURRENT)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class SelPlayGroundTest1
 {
-    protected WebDriver driver = null;
-    static String URL = "https://lambdatest.github.io/sample-todo-app/";
-    public static String status = "passed";
+    protected RemoteWebDriver driver = null;
+    static String URL = "https://www.lambdatest.com/selenium-playground/";
+    public static String status;
     String gridURL = "@hub.lambdatest.com/wd/hub";
     String user_name = System.getenv("LT_USERNAME") == null ? "LT_USERNAME" :
             System.getenv("LT_USERNAME");
@@ -48,8 +45,7 @@ public class SelPlayGroundTest1
         System.out.println("Setting up resources to run tests on HyperExecute Grid");
     }
 
-    public void SetUpBrowser(String browserName, String version, String platform,
-                             String build, String name)
+    public void SetUpBrowser(String browserName, String version, String platform, String build, String name)
     {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
@@ -81,18 +77,9 @@ public class SelPlayGroundTest1
 
     @ParameterizedTest
     @MethodSource("setup_testEnvironment")
-    /*
-    @ParameterizedTest(name = "{index} => browserName={0}, version={1}, platform={2}, build={3}, name={4}")
-    @CsvFileSource(resources = "/test-combinations/win/junit-test-data.csv")
-    */
-    public void test_SelPlayground(String browserName, String version, String platform,
-                                     String build, String name)
+    public void test_SelPlayground(String browserName, String version, String platform, String build, String name)
     {
         SetUpBrowser(browserName, version, platform, build, name);
-
-        String methodName = Thread.currentThread()
-                .getStackTrace()[1]
-                .getMethodName();
 
         driver.navigate().to(URL);
         driver.manage().window().maximize();
@@ -101,23 +88,104 @@ public class SelPlayGroundTest1
 
         try
         {
-            /* Let's mark done first two items in the list. */
-            driver.findElement(By.name("li1")).click();
-            driver.findElement(By.name("li2")).click();
+            /*Navigating to simple demo form*/
+            driver.findElement(By.linkText("Simple Form Demo")).click();
+            
+            driver.findElement(By.cssSelector("#user-message")).sendKeys("Hello World");
+            driver.findElement(By.cssSelector("#showInput")).click();
 
-            /* Let's add an item in the list. */
-            driver.findElement(By.id("sampletodotext")).sendKeys("Happy Testing at LambdaTest");
-            driver.findElement(By.id("addbutton")).click();
-
-            /* Let's check that the item we added is added in the list. */
-            String enteredText = driver.findElement(By.xpath("//span[.='Happy Testing at LambdaTest']")).getText();
-            if (enteredText.equals("Happy Testing at LambdaTest"))
+            String enteredMessage = driver.findElement(By.cssSelector("#message")).getText();
+            if (enteredMessage.equals("Hello World"))
             {
-                System.out.println("JUnit demo on HyperExecute Grid is successful");
+                System.out.println("Hello World printed successfully");
             }
+            
+            driver.findElement(By.cssSelector("#sum1")).sendKeys("65");
+            driver.findElement(By.cssSelector("#sum2")).sendKeys("35");
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/form[1]/button[1]")).click();
+            
+            String sum = driver.findElement(By.cssSelector("#message")).getText();
+            if (sum.equals("100"))
+            {
+                System.out.println("Calculation done successfully");
+            }
+            
+            /*Navigating to checkbox demo form*/
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.scrollBy(0,-500)", "");
+            driver.findElement(By.linkText("Checkbox Demo")).click();
+            Thread.sleep(1000);
+            
+            driver.findElement(By.cssSelector("#isAgeSelected")).click();
+            
+            driver.findElement(By.cssSelector("#ex1-check1")).click();
+            driver.findElement(By.cssSelector("#ex1-check2")).click();
+            driver.findElement(By.cssSelector("#ex1-check3")).click();
+            driver.findElement(By.cssSelector("#ex1-check2")).click();
+            driver.findElement(By.cssSelector("#ex1-check3")).click();
+            driver.findElement(By.cssSelector("#ex1-check1")).click();
+            driver.findElement(By.cssSelector("#ex1-check2")).click();
+            driver.findElement(By.cssSelector("#ex1-check3")).click();
+            driver.findElement(By.cssSelector("#ex1-check1")).click();
+            
+            driver.findElement(By.cssSelector("#box")).click();
+            driver.findElement(By.cssSelector("#box")).click();
+            driver.findElement(By.cssSelector("#box")).click();
+            driver.findElement(By.cssSelector("#box")).click();
+            driver.findElement(By.cssSelector("#box")).click();
+            driver.findElement(By.cssSelector("#box")).click();
+            
+            /*Navigating to Radio buttons demo form*/
+            driver.findElement(By.linkText("Radio Buttons Demo")).click();
+            Thread.sleep(1000);
+            
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.cssSelector("#buttoncheck")).click();
+            
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[3]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[3]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
+            
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/button[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/button[1]")).click();
+           
+            /*Navigating to different pages from side menu*/
+            js.executeScript("window.scrollBy(0,-500)", "");
+            driver.findElement(By.linkText("Select Dropdown List")).click();
+            driver.findElement(By.linkText("Input Form Submit")).click();
+            driver.findElement(By.linkText("Ajax Form Submit")).click();
+            driver.findElement(By.linkText("JQuery Select dropdown")).click();
+            driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/section[3]/div[1]/div[1]/div[1]/div[3]/p[1]")).click();
+            driver.findElement(By.linkText("Table Pagination")).click();
+            driver.findElement(By.linkText("Table Data Search")).click();
+            driver.findElement(By.linkText("Table Filter")).click();
+            driver.findElement(By.linkText("Table Sort & Search")).click();
+            driver.findElement(By.linkText("Table Data Download")).click();
+            driver.findElement(By.linkText("Table Pagination")).click();
+            driver.findElement(By.linkText("Table Data Search")).click();
+
+            status= "passed";
         }
         catch (Exception e)
         {
+            status= "failed";
             System.out.println(e.getMessage());
         }
     }
@@ -125,6 +193,7 @@ public class SelPlayGroundTest1
     @AfterEach
     public void TearDownClass()
     {
+        ((JavascriptExecutor) driver).executeScript("lambda-status=" + status);
         driver.quit();
         System.out.println("Browser resources released");
     }
@@ -143,11 +212,11 @@ public class SelPlayGroundTest1
 
         return Stream.of(
             arguments("Microsoft Edge", "latest", platform_name,
-                    "[Test - 3] JUnit tests on HyperExecute Grid",
-                    "[Test - 3] JUnit tests on HyperExecute Grid"),
+                    "[Test - 1] JUnit tests on HyperExecute Grid",
+                    "[Test - 1] JUnit tests on HyperExecute Grid"),
             arguments("Microsoft Edge", "latest-1", platform_name,
-                    "[Test - 4] JUnit tests on HyperExecute Grid",
-                    "[Test - 4] JUnit tests on HyperExecute Grid")
+                    "[Test - 2] JUnit tests on HyperExecute Grid",
+                    "[Test - 2] JUnit tests on HyperExecute Grid")
         );
     }
 }
