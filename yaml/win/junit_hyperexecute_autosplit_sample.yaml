@@ -27,7 +27,7 @@ cacheDirectories:
 pre:
   # Download and install packages in the CACHE_DIR.
   # Skip execution of the tests in the pre step
-  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
+  - mvn -Dmaven.repo.local=${CACHE_DIR} -Dmaven.test.skip=true clean install
 
 post:
   - cat yaml/win/junit_hyperexecute_autosplit_sample.yaml
