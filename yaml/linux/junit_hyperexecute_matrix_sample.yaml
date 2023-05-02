@@ -17,7 +17,7 @@ env:
 
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
-  - $CACHE_DIR
+  - m2_cache_dir
 
 matrix:
   classname: ["SelPlayGroundTest1", "SelPlayGroundTest2", "SelPlayGroundTest3" ]
