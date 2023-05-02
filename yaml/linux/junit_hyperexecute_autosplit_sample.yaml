@@ -19,7 +19,7 @@ env:
 
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
-  - $CACHE_DIR
+  - m2_cache_dir
 
 shell: bash
 
