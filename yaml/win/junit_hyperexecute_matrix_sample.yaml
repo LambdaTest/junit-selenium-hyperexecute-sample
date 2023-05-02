@@ -21,7 +21,7 @@ cacheDirectories:
   - $CACHE_DIR
 
 matrix:
-  classname: ["ToDoTest", "SelPlayGroundTest1", "SelPlayGroundTest2" ]
+  classname: ["SelPlayGroundTest1", "SelPlayGroundTest2", "SelPlayGroundTest3" ]
 
 # shell: bash
 
