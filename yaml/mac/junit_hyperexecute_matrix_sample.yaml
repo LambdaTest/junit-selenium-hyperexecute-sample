@@ -18,7 +18,7 @@ env:
 # Dependency caching for Windows
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
-  - m2_cache_dir
+  - ${CACHE_DIR}
 
 matrix:
   classname: ["SelPlayGroundTest1", "SelPlayGroundTest2", "SelPlayGroundTest3" ]
