@@ -45,3 +45,5 @@ uploadArtefacts:
 
 testSuites:
   - mvn `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dtest=$classname test site surefire-report:report
+
+jobLabel: [selenium-junit, win, matrix]
