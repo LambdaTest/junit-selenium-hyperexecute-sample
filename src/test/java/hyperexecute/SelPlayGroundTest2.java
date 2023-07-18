@@ -196,10 +196,10 @@ public class SelPlayGroundTest2
 
         return Stream.of(
             arguments("Chrome", "latest-2", platform_name,
-                    "[Test - 3] JUnit tests on HyperExecute Grid",
+                    "junit-selenium-hyperexecute-sample",
                     "[Test - 3] JUnit tests on HyperExecute Grid"),
             arguments("Firefox", "latest", platform_name,
-                    "[Test - 4] JUnit tests on HyperExecute Grid",
+                    "junit-selenium-hyperexecute-sample",
                     "[Test - 4] JUnit tests on HyperExecute Grid")
         );
     }

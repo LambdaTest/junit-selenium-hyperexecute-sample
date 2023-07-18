@@ -212,10 +212,10 @@ public class SelPlayGroundTest1
 
         return Stream.of(
             arguments("Microsoft Edge", "latest", platform_name,
-                    "[Test - 1] JUnit tests on HyperExecute Grid",
+                    "junit-selenium-hyperexecute-sample",
                     "[Test - 1] JUnit tests on HyperExecute Grid"),
             arguments("Microsoft Edge", "latest-1", platform_name,
-                    "[Test - 2] JUnit tests on HyperExecute Grid",
+                    "junit-selenium-hyperexecute-sample",
                     "[Test - 2] JUnit tests on HyperExecute Grid")
         );
     }
