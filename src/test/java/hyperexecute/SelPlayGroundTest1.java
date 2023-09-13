@@ -102,18 +102,16 @@ public class SelPlayGroundTest1
             
             driver.findElement(By.cssSelector("#sum1")).sendKeys("65");
             driver.findElement(By.cssSelector("#sum2")).sendKeys("35");
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/form[1]/button[1]")).click();
+            driver.findElement(By.xpath("//*[@id='gettotal']/button")).click();
             
             String sum = driver.findElement(By.cssSelector("#message")).getText();
             if (sum.equals("100"))
             {
                 System.out.println("Calculation done successfully");
             }
-            
-            /*Navigating to checkbox demo form*/
             JavascriptExecutor js = (JavascriptExecutor) driver;
+            driver.navigate().to("https://www.lambdatest.com/selenium-playground/checkbox-demo");
             js.executeScript("window.scrollBy(0,-500)", "");
-            driver.findElement(By.linkText("Checkbox Demo")).click();
             Thread.sleep(1000);
             
             driver.findElement(By.cssSelector("#isAgeSelected")).click();
@@ -136,50 +134,42 @@ public class SelPlayGroundTest1
             driver.findElement(By.cssSelector("#box")).click();
             
             /*Navigating to Radio buttons demo form*/
-            driver.findElement(By.linkText("Radio Buttons Demo")).click();
+            driver.navigate().to("https://www.lambdatest.com/selenium-playground/radiobutton-demo");
+      
             Thread.sleep(1000);
             
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[2]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[2]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]//label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]//label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]//label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]//label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]//label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]//label[2]")).click();
             driver.findElement(By.cssSelector("#buttoncheck")).click();
             
             Thread.sleep(1000);
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[3]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[3]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[1]/label")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[2]/label")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[3]/label")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[1]/label")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[2]/label")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[3]/label")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[1]/label")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[2]/label")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[3]/label")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[2]/div[1]/div[1]/div/div[2]//div[1]/label")).click();
             
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[2]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/button[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[1]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[2]/label[2]")).click();
-            driver.findElement(By.xpath("//body/div[@id='__next']/div[1]/section[3]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/button[1]")).click();
-           
+            driver.findElement(By.xpath("//body/div[@id='__next']/div/section[2]/div/div/div/div[3]/div/div/div[1]/div[1]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div/section[2]/div/div/div/div[3]/div/div/div[1]/div[1]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div/section[2]/div/div/div/div[3]/div/div/div[1]/div[1]/label[3]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div/section[2]/div/div/div/div[3]/div/div/div[1]/div[2]/label[1]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div/section[2]/div/div/div/div[3]/div/div/div[1]/div[2]/label[2]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div/section[2]/div/div/div/div[3]/div/div/div[1]/div[2]/label[3]")).click();
+            driver.findElement(By.xpath("//body/div[@id='__next']/div/section[2]/div/div/div/div[3]/div/div/div[1]/button")).click();
             /*Navigating to different pages from side menu*/
             js.executeScript("window.scrollBy(0,-500)", "");
-            driver.findElement(By.linkText("Select Dropdown List")).click();
-            driver.findElement(By.linkText("Input Form Submit")).click();
-            driver.findElement(By.linkText("Ajax Form Submit")).click();
-            driver.findElement(By.linkText("JQuery Select dropdown")).click();
-            driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/section[3]/div[1]/div[1]/div[1]/div[3]/p[1]")).click();
-            driver.findElement(By.linkText("Table Pagination")).click();
-            driver.findElement(By.linkText("Table Data Search")).click();
-            driver.findElement(By.linkText("Table Filter")).click();
-            driver.findElement(By.linkText("Table Sort & Search")).click();
-            driver.findElement(By.linkText("Table Data Download")).click();
-            driver.findElement(By.linkText("Table Pagination")).click();
-            driver.findElement(By.linkText("Table Data Search")).click();
+            driver.navigate().to("https://www.lambdatest.com/selenium-playground/select-dropdown-demo");
+            driver.findElement(By.id("select-demo")).click();
+
 
             status= "passed";
         }
