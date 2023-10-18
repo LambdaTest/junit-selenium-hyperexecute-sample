@@ -55,5 +55,5 @@ linuxTestRunnerCommand: mvn -Dplatname=linux -Dmaven.repo.local=m2_cache_dir -Dt
 winTestRunnerCommand: mvn `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dtest=$test test site surefire-report:report
 macTestRunnerCommand: mvn -Dplatname=mac -Dmaven.repo.local=m2_cache_dir -Dtest=$test test site surefire-report:report
 
-jobLabel: [selenium-junit, mac, hybrid]
+jobLabel: [selenium-junit, hybrid]
 ---
