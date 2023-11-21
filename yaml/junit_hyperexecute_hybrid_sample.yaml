@@ -1,0 +1,59 @@
+---
+version: 0.1
+globalTimeout: 150
+testSuiteTimeout: 150
+testSuiteStep: 150
+
+runson: ${matrix.os}
+retryOnFailure: true
+autosplit: true
+maxRetries: 1
+concurrency: 3
+parallelism: 2
+
+matrix:
+  os: [mac, win, linux]
+  classname: ["SelPlayGroundTest1", "SelPlayGroundTest2", "SelPlayGroundTest3" ]
+
+env:
+  CACHE_DIR: m2_cache_dir
+  TARGET_OS: linux
+
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - ${CACHE_DIR}
+
+shell: bash
+
+pre:
+  - mvn -Dmaven.repo.local=${CACHE_DIR} -Dmaven.test.skip=true clean install
+
+post:
+  - cat yaml/junit_hyperexecute_hybrid_sample.yaml
+
+mergeArtifacts: true
+
+uploadArtefacts:
+ - name: Final-Report
+   path:
+    - target/site/**
+ - name: Surefire-Report
+   path:
+    - target/surefire-reports/**
+
+testDiscovery:
+  type: raw
+  mode: dynamic
+  macCommand: |
+    grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
+  winCommand: | 
+    grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
+  linuxCommand: |
+    grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
+
+linuxTestRunnerCommand: mvn -Dplatname=linux -Dmaven.repo.local=m2_cache_dir -Dtest=$test test site surefire-report:report
+winTestRunnerCommand: mvn `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dtest=$test test site surefire-report:report
+macTestRunnerCommand: mvn -Dplatname=mac -Dmaven.repo.local=m2_cache_dir -Dtest=$test test site surefire-report:report
+
+jobLabel: [selenium-junit, hybrid]
+---
