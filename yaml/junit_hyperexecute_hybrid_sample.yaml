@@ -41,6 +41,12 @@ uploadArtefacts:
    path:
     - target/surefire-reports/**
 
+report: true
+partialReports:
+  location: target/surefire-reports/html
+  type: html
+  frameworkName: extent
+
 testDiscovery:
   type: raw
   mode: dynamic
