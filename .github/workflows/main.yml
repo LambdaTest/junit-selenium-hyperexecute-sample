@@ -10,7 +10,7 @@ on:
         required: true
       sampleRepoLink:
         description: Link to the HyperExecute sample repo
-        default: https://github.com/amanchopra1905/junit-selenium-hyperexecute-sample
+        default: https://github.com/LambdaTest/junit-selenium-hyperexecute-sample
         required: true
 jobs:
   HyperExecute-Selenium:

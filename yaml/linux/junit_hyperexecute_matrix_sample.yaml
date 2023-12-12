@@ -42,6 +42,12 @@ uploadArtefacts:
    path:
     - target/surefire-reports/**
 
+report: true
+partialReports:
+  location: target/surefire-reports/html
+  type: html
+  frameworkName: extent
+
 testSuites:
   - mvn -Dplatname=linux -Dmaven.repo.local=m2_cache_dir -Dtest=$classname test site surefire-report:report
 
