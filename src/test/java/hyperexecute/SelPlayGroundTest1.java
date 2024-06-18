@@ -59,18 +59,18 @@ public class SelPlayGroundTest1
         capabilities.setCapability("video", true);
         capabilities.setCapability("console", true);
 
-        try
-        {
-            driver = new RemoteWebDriver(new URL("https://" + user_name + ":" + access_key + gridURL), capabilities);
-        }
-        catch (MalformedURLException e)
-        {
-            System.out.println("Invalid grid URL");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+        // try
+        // {
+        //     driver = new RemoteWebDriver(new URL("https://" + user_name + ":" + access_key + gridURL), capabilities);
+        // }
+        // catch (MalformedURLException e)
+        // {
+        //     System.out.println("Invalid grid URL");
+        // }
+        // catch (Exception e)
+        // {
+        //     System.out.println(e.getMessage());
+        // }
 
         csv_source = "/test-combinations/win/junit-test-data.csv";
     }

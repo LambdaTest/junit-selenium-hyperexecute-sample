@@ -47,6 +47,9 @@ partialReports:
   type: html
   frameworkName: extent
 
+errorCategorizedReport:
+  enabled: true
+
 testDiscovery:
   type: raw
   mode: dynamic
