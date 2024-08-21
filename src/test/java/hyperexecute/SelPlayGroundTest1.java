@@ -31,7 +31,6 @@ public class SelPlayGroundTest1
     String access_key = System.getenv("LT_ACCESS_KEY") == null ? "LT_ACCESS_KEY" :
             System.getenv("LT_ACCESS_KEY");
     String test_platform = System.getenv("TEST_OS");
-    // public static String csv_source = "/test-combinations/win/junit-test-data.csv";
 
     @BeforeAll
     public static void start()
@@ -71,8 +70,6 @@ public class SelPlayGroundTest1
         {
             System.out.println(e.getMessage());
         }
-
-        // csv_source = "/test-combinations/win/junit-test-data.csv";
     }
 
     @ParameterizedTest

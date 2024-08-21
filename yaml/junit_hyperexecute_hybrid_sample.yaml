@@ -12,7 +12,6 @@ parallelism: 1
 
 matrix:
   os: [mac, win, linux]
-  # classname: ["SelPlayGroundTest1", "SelPlayGroundTest2", "SelPlayGroundTest3" ]
 
 env:
   CACHE_DIR: m2_cache_dir
