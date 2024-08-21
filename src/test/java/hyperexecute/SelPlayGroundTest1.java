@@ -31,7 +31,7 @@ public class SelPlayGroundTest1
     String access_key = System.getenv("LT_ACCESS_KEY") == null ? "LT_ACCESS_KEY" :
             System.getenv("LT_ACCESS_KEY");
     String test_platform = System.getenv("TEST_OS");
-    public static String csv_source = "/test-combinations/win/junit-test-data.csv";
+    // public static String csv_source = "/test-combinations/win/junit-test-data.csv";
 
     @BeforeAll
     public static void start()
@@ -59,20 +59,20 @@ public class SelPlayGroundTest1
         capabilities.setCapability("video", true);
         capabilities.setCapability("console", true);
 
-        // try
-        // {
-        //     driver = new RemoteWebDriver(new URL("https://" + user_name + ":" + access_key + gridURL), capabilities);
-        // }
-        // catch (MalformedURLException e)
-        // {
-        //     System.out.println("Invalid grid URL");
-        // }
-        // catch (Exception e)
-        // {
-        //     System.out.println(e.getMessage());
-        // }
+        try
+        {
+            driver = new RemoteWebDriver(new URL("https://" + user_name + ":" + access_key + gridURL), capabilities);
+        }
+        catch (MalformedURLException e)
+        {
+            System.out.println("Invalid grid URL");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
 
-        csv_source = "/test-combinations/win/junit-test-data.csv";
+        // csv_source = "/test-combinations/win/junit-test-data.csv";
     }
 
     @ParameterizedTest
@@ -201,10 +201,10 @@ public class SelPlayGroundTest1
         System.out.println(platform_name);
 
         return Stream.of(
-            arguments("Microsoft Edge", "latest", platform_name,
+            arguments("Chrome", "latest", platform_name,
                     "[Test - 1] JUnit tests on HyperExecute Grid",
                     "[Test - 1] JUnit tests on HyperExecute Grid"),
-            arguments("Microsoft Edge", "latest-1", platform_name,
+            arguments("Chrome", "latest-1", platform_name,
                     "[Test - 2] JUnit tests on HyperExecute Grid",
                     "[Test - 2] JUnit tests on HyperExecute Grid")
         );
