@@ -5,15 +5,13 @@ testSuiteTimeout: 150
 testSuiteStep: 150
 
 runson: ${matrix.os}
-retryOnFailure: true
+
 autosplit: true
-maxRetries: 1
 concurrency: 3
-parallelism: 2
+parallelism: 1
 
 matrix:
   os: [mac, win, linux]
-  classname: ["SelPlayGroundTest1", "SelPlayGroundTest2", "SelPlayGroundTest3" ]
 
 env:
   CACHE_DIR: m2_cache_dir
@@ -23,29 +21,8 @@ cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
   - ${CACHE_DIR}
 
-shell: bash
-
 pre:
   - mvn -Dmaven.repo.local=${CACHE_DIR} -Dmaven.test.skip=true clean install
-
-post:
-  - cat yaml/junit_hyperexecute_hybrid_sample.yaml
-
-mergeArtifacts: true
-
-uploadArtefacts:
- - name: Final-Report
-   path:
-    - target/site/**
- - name: Surefire-Report
-   path:
-    - target/surefire-reports/**
-
-report: true
-partialReports:
-  location: target/surefire-reports/html
-  type: html
-  frameworkName: extent
 
 testDiscovery:
   type: raw
@@ -60,6 +37,27 @@ testDiscovery:
 linuxTestRunnerCommand: mvn -Dplatname=linux -Dmaven.repo.local=m2_cache_dir -Dtest=$test test site surefire-report:report
 winTestRunnerCommand: mvn `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dtest=$test test site surefire-report:report
 macTestRunnerCommand: mvn -Dplatname=mac -Dmaven.repo.local=m2_cache_dir -Dtest=$test test site surefire-report:report
+
+retryOnFailure: true
+maxRetries: 1
+
+post:
+  - cat yaml/junit_hyperexecute_hybrid_sample.yaml
+
+mergeArtifacts: true
+uploadArtefacts:
+ - name: Final-Report
+   path:
+    - target/site/**
+ - name: Surefire-Report
+   path:
+    - target/surefire-reports/**
+
+report: true
+partialReports:
+  location: target/surefire-reports/html
+  type: html
+  frameworkName: extent
 
 jobLabel: [selenium-junit, hybrid]
 ---

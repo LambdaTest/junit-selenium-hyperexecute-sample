@@ -194,10 +194,10 @@ public class SelPlayGroundTest3 {
         System.out.println(platform_name);
 
         return Stream.of(
-            arguments("Chrome", "latest-1", platform_name,
+            arguments("Chrome", "latest", platform_name,
                     "[Test - 5] JUnit tests on HyperExecute Grid",
                     "[Test - 5] JUnit tests on HyperExecute Grid"),
-            arguments("Firefox", "latest-2", platform_name,
+            arguments("Microsoft Edge", "latest", platform_name,
                     "[Test - 6] JUnit tests on HyperExecute Grid",
                     "[Test - 6] JUnit tests on HyperExecute Grid")
         );

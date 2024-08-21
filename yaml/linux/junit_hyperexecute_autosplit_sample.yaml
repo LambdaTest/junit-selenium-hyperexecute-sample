@@ -1,51 +1,14 @@
 ---
 version: 0.1
-globalTimeout: 150
-testSuiteTimeout: 150
-testSuiteStep: 150
-
 runson: linux
 
 autosplit: true
-retryOnFailure: true
-
-maxRetries: 1
 concurrency: 3
 
-env:
-  # PAT: ${{ .secrets.testKey }}
-  CACHE_DIR: m2_cache_dir
-  TARGET_OS: linux
-
-cacheKey: '{{ checksum "pom.xml" }}'
-cacheDirectories:
-  - ${CACHE_DIR}
-
-shell: bash
-
 pre:
-  # Download and install packages in the CACHE_DIR.
-  # Skip execution of the tests in the pre step
-  - mvn -Dmaven.repo.local=${CACHE_DIR} -Dmaven.test.skip=true clean install
-
-post:
-  - cat yaml/linux/junit_hyperexecute_autosplit_sample.yaml
+  - mvn clean install
 
 mergeArtifacts: true
-
-uploadArtefacts:
- - name: Final-Report
-   path:
-    - target/site/**
- - name: Surefire-Report
-   path:
-    - target/surefire-reports/**
-
-report: true
-partialReports:
-  location: target/surefire-reports/html
-  type: html
-  frameworkName: extent
 
 testDiscovery:
   type: raw
@@ -53,5 +16,8 @@ testDiscovery:
   command: grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
 
 testRunnerCommand: mvn -Dplatname=linux -Dmaven.repo.local=m2_cache_dir -Dtest=$test test site surefire-report:report
+
+retryOnFailure: true
+maxRetries: 1
 
 jobLabel: [selenium-junit, linux, autosplit]
