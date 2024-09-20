@@ -15,24 +15,24 @@ HyperExecute is configured using a YAML file. Instead of moving the Hub close to
 
 ## 📖 Table of Contents
 
-1. [Run Your Test Using Gitpod](#run-your-test-using-gitpod)  
-2. [Run Your Test from Local Machine](#run-your-test-from-local-machine)  
-  2.1 [Fork and Clone the Repository](#fork-and-clone-the-repository)<br />
-  2.2 [Download HyperExecute CLI](#download-hyperexecute-cli)<br />
-  2.3 [Configure Environment Variables](#configure-environment-variables)<br />
-  2.4 [Execute Your Test Suite](#execute-your-test-suite)
-3. [Monitoring & Debugging](#monitoring--debugging)
-4. [Repository Structure](#repository-structure)
-5. [Key Features for QA Engineers](#key-features-for-qa-engineers)  
-  5.1 [AutoSplit Execution](#autosplit-execution)<br />
-  5.2 [Matrix Execution](#matrix-execution)<br />
-  5.3 [Artifacts Management](#artifacts-management)<br />
-  5.4 [Secrets Management](#secrets-management)<br />
+1. [Run Your Test Using Gitpod](#🚀-run-your-test-using-gitpod)  
+2. [Run Your Test from Local Machine](#🚀-run-your-test-from-local-machine)  
+  2.1 [Fork and Clone the Repository](#1-fork-and-clone-the-repository)<br />
+  2.2 [Download HyperExecute CLI](#2-download-hyperexecute-cli)<br />
+  2.3 [Configure Environment Variables](#3-configure-environment-variables)<br />
+  2.4 [Execute Your Test Suite](#4-execute-your-test-suite)
+3. [Monitoring & Debugging](#🔍-monitoring--debugging)
+4. [Repository Structure](#🧑‍💻-repository-structure)
+5. [Key Features for QA Engineers](#🧑‍💻-key-features-for-qa-engineers)  
+  5.1 [AutoSplit Execution](#🏃-autosplit-execution)<br />
+  5.2 [Matrix Execution](#🗂️-matrix-execution)<br />
+  5.3 [Artifacts Management](#⚙️-artifacts-management)<br />
+  5.4 [Secrets Management](#🔐-secrets-management)<br />
   5.5 [Pre-Steps and Dependency Caching](#pre-steps-and-dependency-caching)<br />
   5.6 [Post-Steps](#post-steps)
-6. [Documentation & Resources](#documentation--resources)
-7. [Contributing](#contributing)
-8. [Contact & Support](#contact--support)
+6. [Documentation & Resources](#📚-documentation--resources)
+7. [Contributing](#🤝-contributing)
+8. [Contact & Support](#📞-contact--support)
 
 ## 🚀 Run your test using Gitpod
 Follow the below steps to run Gitpod button:
