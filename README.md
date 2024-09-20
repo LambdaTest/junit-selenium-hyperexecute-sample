@@ -27,7 +27,7 @@ HyperExecute is configured using a YAML file. Instead of moving the Hub close to
   5.1 [AutoSplit Execution](#🏃-autosplit-execution)<br />
   5.2 [Matrix Execution](#🗂️-matrix-execution)<br />
   5.3 [Artifacts Management](#⚙️-artifacts-management)<br />
-  5.4 [Secrets Management](#🔐-secrets-management)<br />
+  5.4 [Secrets Management](#secrets-management)<br />
   5.5 [Pre-Steps and Dependency Caching](#pre-steps-and-dependency-caching)<br />
   5.6 [Post-Steps](#post-steps)
 6. [Documentation & Resources](#📚-documentation--resources)
