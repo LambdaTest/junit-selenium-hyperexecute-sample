@@ -1,410 +1,224 @@
 <img height="100" alt="hyperexecute_logo" src="https://user-images.githubusercontent.com/1688653/159473714-384e60ba-d830-435e-a33f-730df3c3ebc6.png">
 
-HyperExecute is a smart test orchestration platform to run end-to-end Selenium tests at the fastest speed possible. HyperExecute lets you achieve an accelerated time to market by providing a test infrastructure that offers optimal speed, test orchestration, and detailed execution logs.
+HyperExecute is a next-gen test execution platform by LambdaTest, designed to supercharge your test runs with unparalleled speed, scalability, and smart test management. Whether you're running cross-browser tests or executing your CI/CD pipeline, HyperExecute ensures efficiency and speed in the cloud.
 
-The overall experience helps teams test code and fix issues at a much faster pace. HyperExecute is configured using a YAML file. Instead of moving the Hub close to you, HyperExecute brings the test scripts close to the Hub!
+HyperExecute is configured using a YAML file. Instead of moving the Hub close to you, HyperExecute brings the test scripts close to the Hub!
 
-* <b>HyperExecute HomePage</b>: https://www.lambdatest.com/hyperexecute
-* <b>Lambdatest HomePage</b>: https://www.lambdatest.com
-* <b>LambdaTest Support</b>: [support@lambdatest.com](mailto:support@lambdatest.com)
+- [HyperExecute HomePage](https://www.lambdatest.com/hyperexecute)
+- [Lambdatest HomePage](https://www.lambdatest.com)
+- [HyperExecute Documentation](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/)
+- [LambdaTest Support](mailto:support@lambdatest.com)
+<br />
 
-To know more about how HyperExecute does intelligent Test Orchestration, do check out [HyperExecute Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/)
+[<img alt="Try it now" width="200px" align="center" src="images/Try it Now.svg" />](https://hyperexecute.lambdatest.com/?utm_source=github&utm_medium=repository&utm_content=java&utm_term=junit)
+<br /><br />
 
-[<img alt="Try it now" width="200 px" align="center" src="images/Try it Now.svg" />](https://hyperexecute.lambdatest.com/?utm_source=github&utm_medium=repository&utm_content=java&utm_term=junit)
+## 📖 Table of Contents
 
+1. [Run Your Test Using Gitpod](#run-your-test-using-gitpod)  
+2. [Run Your Test from Local Machine](#run-your-test-from-local-machine)  
+  2.1 [Fork and Clone the Repository](#fork-and-clone-the-repository)<br />
+  2.2 [Download HyperExecute CLI](#download-hyperexecute-cli)<br />
+  2.3 [Configure Environment Variables](#configure-environment-variables)<br />
+  2.4 [Execute Your Test Suite](#execute-your-test-suite)
+3. [Monitoring & Debugging](#monitoring--debugging)
+4. [Repository Structure](#repository-structure)
+5. [Key Features for QA Engineers](#key-features-for-qa-engineers)  
+  5.1 [AutoSplit Execution](#autosplit-execution)<br />
+  5.2 [Matrix Execution](#matrix-execution)<br />
+  5.3 [Artifacts Management](#artifacts-management)<br />
+  5.4 [Secrets Management](#secrets-management)<br />
+  5.5 [Pre-Steps and Dependency Caching](#pre-steps-and-dependency-caching)<br />
+  5.6 [Post-Steps](#post-steps)
+6. [Documentation & Resources](#documentation--resources)
+7. [Contributing](#contributing)
+8. [Contact & Support](#contact--support)
 
-## Gitpod
-
+## 🚀 Run your test using Gitpod
 Follow the below steps to run Gitpod button:
 
 1. Click '**Open in Gitpod**' button (You will be redirected to Login/Signup page).
 2. Login with Lambdatest credentials and it will be redirected to Gitpod editor in new tab and current tab will show hyperexecute dashboard.
 
-[<img alt="Run in Gitpod" width="200 px" align="center" src="images/Gitpod.svg" />](https://hyperexecute.lambdatest.com/hyperexecute/jobs?type=gitpod&framework=JUnit)
----
+[<img alt="Run in Gitpod" width="200px" align="center" src="images/Gitpod.svg" />](https://hyperexecute.lambdatest.com/hyperexecute/jobs?type=gitpod&framework=JUnit)
+<br /><br />
 
-<!---If logged in, it will be redirected to Gitpod editor in new tab where current tab will show hyperexecute dashboard.
+## 🚀 Run your test from Local Machine
+> Before proceeding forward, make sure you have created your account on [LambdaTest](https://accounts.lambdatest.com/login)
 
-If not logged in, it will be redirected to Login/Signup page and simultaneously redirected to Gitpod editor in a new tab where current tab will show hyperexecute dashboard.
+Follow the steps below to get started with running Selenium JUnit tests on HyperExecute!
+<br />
 
-If not signed up, you need to sign up and simultaneously redirected to Gitpod in a new tab where current tab will show hyperexecute dashboard.--->
-
-# How to run Selenium automation tests on HyperExecute (using JUnit framework)
-
-* [Pre-requisites](#pre-requisites)
-   - [Download HyperExecute CLI](#download-hyperexecute-cli)
-   - [Configure Environment Variables](#configure-environment-variables)
-
-* [Auto-Split Execution with JUnit](#auto-split-execution-with-junit)
-   - [Core](#core)
-   - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching)
-   - [Post Steps](#post-steps)
-   - [Artifacts Management](#artifacts-management)
-   - [Test Execution](#test-execution)
-
-* [Matrix Execution with JUnit](#matrix-execution-with-junit)
-   - [Core](#core-1)
-   - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching-1)
-   - [Post Steps](#post-steps-1)
-   - [Artifacts Management](#artifacts-management-1)
-   - [Test Execution](#test-execution-1)
-
-* [Secrets Management](#secrets-management)
-* [Navigation in Automation Dashboard](#navigation-in-automation-dashboard)
-
-# Pre-requisites
-
-Before using HyperExecute, you have to download HyperExecute CLI corresponding to the host OS. Along with it, you also need to export the environment variables *LT_USERNAME* and *LT_ACCESS_KEY* that are available in the [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile) page.
-
-## Download HyperExecute CLI
-
-HyperExecute CLI is the CLI for interacting and running the tests on the HyperExecute Grid. The CLI provides a host of other useful features that accelerate test execution. In order to trigger tests using the CLI, you need to download the HyperExecute CLI binary corresponding to the platform (or OS) from where the tests are triggered:
-
-Also, it is recommended to download the binary in the project's parent directory. Shown below is the location from where you can download the HyperExecute CLI binary:
-
-* Mac: https://downloads.lambdatest.com/hyperexecute/darwin/hyperexecute
-* Linux: https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute
-* Windows: https://downloads.lambdatest.com/hyperexecute/windows/hyperexecute.exe
-
-## Configure Environment Variables
-
-Before the tests are run, please set the environment variables LT_USERNAME & LT_ACCESS_KEY from the terminal. The account details are available on your [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile) page.
-
-For macOS:
+### 1. Fork and Clone the Repository
+First, fork this repository and make a copy of it in your github account, and then clone this repository to your local machine:
 
 ```bash
-export LT_USERNAME=LT_USERNAME
-export LT_ACCESS_KEY=LT_ACCESS_KEY
+git clone https://github.com/LambdaTest/junit-selenium-hyperexecute-sample.git
+cd junit-selenium-hyperexecute-sample
 ```
+***
 
-For Linux:
+### 2. Download HyperExecute CLI
+It is used for interacting and running the tests on the HyperExecute. The [CLI](https://www.lambdatest.com/support/docs/hyperexecute-cli-run-tests-on-hyperexecute-grid/) provides a host of other useful features that accelerate test execution. In order to trigger tests using the CLI, you need to download the HyperExecute CLI binary corresponding to the platform (or OS) from where the tests are triggered:
+
+> It is recommended to download the binary in the project's parent directory.
+
+| Operating System | HyperExecute CLI Download Link |
+|------------------|--------------------------------|
+| Linux | https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute |
+| Windows | https://downloads.lambdatest.com/hyperexecute/windows/hyperexecute.exe |
+| macOS | https://downloads.lambdatest.com/hyperexecute/darwin/hyperexecute |
+
+***
+
+### 3. Configure Environment Variables
+Before the tests are run, please [set the environment variables](https://www.lambdatest.com/support/docs/hyperexecute-environment-variable-setup/) `LT_USERNAME` and `LT_ACCESS_KEY` from the terminal. The account details are available on your [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile) page.
+
+- **Linux / macOS :**
+  ```bash
+  export LT_USERNAME=YOUR_LAMBDATEST_USERNAME
+  export LT_ACCESS_KEY=YOUR_LAMBDATEST_ACCESS_KEY
+  ```
+
+- **Windows :**
+  ```bash
+  set LT_USERNAME=YOUR_LAMBDATEST_USERNAME
+  set LT_ACCESS_KEY=YOUR_LAMBDATEST_ACCESS_KEY
+  ```
+***
+
+### 4. Execute your Test Suite
+> **NOTE :** In case of MacOS, if you get a permission denied warning while executing CLI, simply run `chmod u+x ./hyperexecute` to allow permission. In case you get a security popup, allow it from your **System Preferences** → **Security & Privacy** → **General tab**.
+
+Run the below command in your terminal at the root folder of the project:
 
 ```bash
-export LT_USERNAME=LT_USERNAME
-export LT_ACCESS_KEY=LT_ACCESS_KEY
+./hyperexecute --config RELATIVE_PATH_OF_YOUR_YAML_FILE
 ```
 
-For Windows:
+OR use this command if you have not exported your username and access key in the above step.
 
 ```bash
-set LT_USERNAME=LT_USERNAME
-set LT_ACCESS_KEY=LT_ACCESS_KEY
+./hyperexecute --user YOUR_LAMBDATEST_USERNAME --key YOUR_LAMBDATEST_ACCESS_KEY --config RELATIVE_PATH_OF_YOUR_YAML_FILE
 ```
+***
 
-## Auto-Split Execution with JUnit
+## 🔍 Monitoring & Debugging
+You can monitor your test execution in real-time using the HyperExecute Automation Dashboard. Easily navigate between test logs, Selenium reports, and HyperExecute logs.
 
-Auto-split execution mechanism lets you run tests at predefined concurrency and distribute the tests over the available infrastructure. Concurrency can be achieved at different levels - file, module, test suite, test, scenario, etc.
+🔗 Visit the [HyperExecute Dashboard](https://hyperexecute.lambdatest.com/hyperexecute)
 
-For more information about auto-split execution, check out the [Auto-Split Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/#smart-auto-test-splitting)
+## 🧑‍💻 Repository Structure
+Here's a breakdown of the repository structure:
 
-### Core
+```bash
+/src/test/java/hyperexecute/
+                    SelPlayGroundTest1.java # Example Selenium JUnit test case
+                    SelPlayGroundTest2.java # Example Selenium JUnit test case
+                    SelPlayGroundTest3.java # Example Selenium JUnit test case
 
-Auto-split YAML file (*yaml/junit_hyperexecute_autosplit_sample.yaml*) in the repo contains the following configuration:
+/yaml
+  /linux/
+      junit_hyperexecute_autosplit_sample.yaml  # YAML file for Linux OS using AutoSplit Method
+      junit_hyperexecute_matrix_sample.yaml     # YAML file for Linux OS using Matrix Method
+  /win/
+      junit_hyperexecute_autosplit_sample.yaml  # YAML file for Window OS using AutoSplit Method
+      junit_hyperexecute_matrix_sample.yaml     # YAML file for Windows OS using Matrix Method
+  /mac/
+      junit_hyperexecute_autosplit_sample.yaml  # YAML file for macOS using AutoSplit Method
+      junit_hyperexecute_matrix_sample.yaml     # YAML file for macOS using Matrix Method
+  /junit_hyperexecute_hybrid_sample.yaml        # YAML file for Hybrid Method
+
+pom.xml                   # Project Object Model (POM) for Maven
+```
+- **SelPlayGroundTest.java :** Contains a sample test case using JUnit and Selenium WebDriver.
+- **junit_hyperexecute_autosplit_sample.yml :** HyperExecute YAML file for executing test using [AutoSplit Method](https://www.lambdatest.com/support/docs/hyperexecute-auto-split-strategy/).
+- **junit_hyperexecute_matrix_sample.yml :** HyperExecute YAML file for executing test using [Matrix Method](https://www.lambdatest.com/support/docs/hyperexecute-matrix-multiplexing-strategy/).
+- **junit_hyperexecute_hybrid_sample.yml :** HyperExecute YAML file for executing test using [Hybrid Method](https://www.lambdatest.com/support/docs/hyperexecute-hybrid-strategy/).
+- **pom.xml :** Maven configuration file that includes dependencies for Selenium, JUnit, and WebDriver.
+
+***
+
+## 🧑‍💻 Key Features for QA Engineers
+### 🏃 AutoSplit Execution
+[AutoSplit](https://www.lambdatest.com/support/docs/hyperexecute-auto-split-strategy/) execution helps to distribute your test load efficiently, optimizing test execution time. You can configure concurrency at various levels like test suite, file, or module.
 
 ```yaml
-globalTimeout: 150
-testSuiteTimeout: 150
-testSuiteStep: 150
-```
-
-Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
- 
-The *runson* key determines the platform (or operating system) on which the tests are executed. Here we have set the target OS as Windows.
-
-```yaml
-runson: win
-```
-
-Auto-split is set to true in the YAML file.
-
-```yaml
- autosplit: true
-```
-
-*retryOnFailure* is set to true, instructing HyperExecute to retry failed command(s). The retry operation is carried out till the number of retries mentioned in *maxRetries* are exhausted or the command execution results in a *Pass*. In addition, the concurrency (i.e. number of parallel sessions) is set to 4.
-
-```yaml
-retryOnFailure: true
-maxRetries: 5
+autosplit: true
 concurrency: 4
 ```
 
-### Pre Steps and Dependency Caching
+This will run tests with 4 parallel sessions, improving test speed.
 
-Dependency caching is enabled in the YAML file to ensure that the package dependencies are not downloaded in subsequent runs. The first step is to set the Key used to cache directories. The directory *m2_cache_dir* is created in the project's root directory.
-
-```yaml
-env:
-  CACHE_DIR: m2_cache_dir
-
-# Dependency caching for Windows
-cacheKey: '{{ checksum "pom.xml" }}'
-cacheDirectories:
-  - $CACHE_DIR
-```
-
-Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the Maven packages are downloaded in the *m2_cache_dir*. To prevent test execution at the *pre* stage, the *maven.test.skip* parameter is set to *true* so that only packages are downloaded and no test execution is performed.
-
-```yaml
-shell: bash
-
-pre:
-  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
-```
-
-### Post Steps
-
-Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/junit_hyperexecute_autosplit_sample.yaml*
-
-```yaml
-post:
-  - cat yaml/junit_hyperexecute_autosplit_sample.yaml
-```
-
-The *testDiscovery* directive contains the command that gives details of the mode of execution, along with detailing the command that is used for test execution. Here, we are fetching the list of class names that would be further passed in the *testRunnerCommand*
-
-```yaml
-testDiscovery:
-  type: raw
-  mode: static
-  command: grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
-```
-
-Running the above command on the terminal will give a list of scenarios present in the *feature* files:
-
-* SelPlayGroundTest1
-* SelPlayGroundTest2
-* ToDoTest
-
-The *testRunnerCommand* contains the command that is used for triggering the test. The output fetched from the *testDiscoverer* command acts as an input to the *testRunner* command.
-
-```yaml
-testRunnerCommand: mvn `-Dmaven.repo.local=$CACHE_DIR `-Dtest=$test test site surefire-report:report
-```
-
-### Artifacts Management
-
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
-
-The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the site and sure-fire reports (i.e. *target/site/* and *target/surefire-reports/*) directory.
-
-```yaml
-mergeArtifacts: true
-
-uploadArtefacts:
- - name: Final Report
-   path:
-    - target/site/**
- - name: Surefire Report
-   path:
-    - target/surefire-reports/**
-```
-
-HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
-
-<img width="1425" alt="junit_autosplit_artefacts_1" src="https://user-images.githubusercontent.com/1688653/160455437-7871ba51-e46c-4bb0-8d34-48097ec427f9.png">
-
-Now, you can download the artifacts by clicking on the Download button as shown below:
-
-<img width="1425" alt="junit_autosplit_artefacts_2" src="https://user-images.githubusercontent.com/1688653/160455442-a2335e56-323c-46df-b75a-a7f21937719f.png">
-
-### Test Execution
-
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/junit_hyperexecute_autosplit_sample.yaml* for Windows and *yaml/linux/junit_hyperexecute_autosplit_sample.yaml* for Linux).
-
-#### Execute JUnit tests using Autosplit mechanism on Windows platform
-
-Run the following command on the terminal to trigger the tests in Java files with HyperExecute platform set to Windows. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
-
-```bash
-./hyperexecute --config yaml/win/junit_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
-```
-
-#### Execute JUnit tests using Autosplit mechanism on Linux platform
-
-Run the following command on the terminal to trigger the tests in Java files with HyperExecute platform set to Linux. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
-
-```bash
-./hyperexecute --config yaml/linux/junit_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
-```
-
-Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution
-
-<img width="1414" alt="junit_autosplit_execution" src="https://user-images.githubusercontent.com/1688653/160455437-7871ba51-e46c-4bb0-8d34-48097ec427f9.png">
-
-Shown below is the execution screenshot when the YAML file is triggered from the terminal:
-
-<img width="1412" alt="junit_autosplit_cli1_execution" src="https://user-images.githubusercontent.com/1688653/159760928-d0816808-e25f-45aa-bacb-4e17312ad4e3.png">
-
-<img width="1408" alt="junit_autosplit_cli2_execution" src="https://user-images.githubusercontent.com/1688653/159760937-5cf297de-5182-469b-9a88-bec78383da1d.png">
-
-# Matrix Execution with JUnit
-
-Matrix-based test execution is used for running the same tests across different test (or input) combinations. The Matrix directive in HyperExecute YAML file is a *key:value* pair where value is an array of strings.
-
-Also, the *key:value* pairs are opaque strings for HyperExecute. For more information about matrix multiplexing, check out the [Matrix Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/#matrix-based-build-multiplexing)
-
-### Core
-
-In the current example, matrix YAML file (*yaml/junit_hyperexecute_matrix_sample.yaml*) in the repo contains the following configuration:
-
-```yaml
-globalTimeout: 150
-testSuiteTimeout: 150
-testSuiteStep: 150
-```
-
-Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
- 
-The target platform is set to Win. Please set the *[runson]* key to *[mac]* if the tests have to be executed on the macOS platform.
-
-```yaml
-runson: win
-```
-
-The *matrix* constitutes of the following entries - *classname*. The entries represent the class names in the test code.
+### 🗂️ Matrix Execution
+[Matrix](https://www.lambdatest.com/support/docs/hyperexecute-matrix-multiplexing-strategy/) execution helps you to the same tests across different configurations (like different browsers, OS, etc.) using Matrix Execution. This is useful for cross-environment compatibility testing.
 
 ```yaml
 matrix:
   classname: ["ToDoTest", "SelPlayGroundTest1", "SelPlayGroundTest2" ]
 ```
-
-The *testSuites* object contains a list of commands (that can be presented in an array). In the current YAML file, commands for executing the tests are put in an array (with a '-' preceding each item). The Maven command *mvn test* is used to run tests located in the current project. In the current project, parallel execution is achieved at the *class* level. The *maven.repo.local* parameter in Maven is used for overriding the location where the dependent Maven packages are downloaded.
-
-```yaml
-testSuites:
-  - mvn `-Dmaven.repo.local=$CACHE_DIR `-Dtest=$classname test site surefire-report:report
-```
-
-### Pre Steps and Dependency Caching
-
-Dependency caching is enabled in the YAML file to ensure that the package dependencies are not downloaded in subsequent runs. The first step is to set the Key used to cache directories. The directory *m2_cache_dir* is created in the project's root directory.
+### ⚙️ Artifacts Management
+HyperExecute makes it easy to upload and download test [artifacts](https://www.lambdatest.com/support/docs/hyperexecute-artifacts/) (like logs, reports, etc.). Artifacts help you analyze the results of your test runs, improving debugging.
 
 ```yaml
-env:
-  CACHE_DIR: ~/m2_cache_dir
-
-cacheKey: '{{ checksum "pom.xml" }}'
-cacheDirectories:
-  - $CACHE_DIR
+uploadArtifacts:
+  - name: Final Report
+    path:
+      - target/site/**
+  - name: Surefire Report
+    path:
+      - target/surefire-reports/**
 ```
-
-Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the Maven packages are downloaded in the *m2_cache_dir*. To prevent test execution at the *pre* stage, the *maven.test.skip* parameter is set to *true* so that only packages are downloaded and no test execution is performed.
-
-```yaml
-pre:
-  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
-```
-
-### Post Steps
-
-Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/junit_hyperexecute_matrix_sample.yaml*
-
-```yaml
-post:
-  - cat yaml/junit_hyperexecute_matrix_sample.yaml
-```
-
-### Artifacts Management
-
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
-
-The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the site and sure-fire reports (i.e. *target/site/* and *target/surefire-reports/*) directory.
-
-```yaml
-mergeArtifacts: true
-
-uploadArtefacts:
- - name: Final Report
-   path:
-    - target/site/**
- - name: Surefire Report
-   path:
-    - target/surefire-reports/**
-```
-
-HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
-
-<img width="1425" alt="junit_matrix_artefacts_1" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
-
-Now, you can download the artifacts by clicking on the Download button as shown below:
-
-<img width="1425" alt="junit_matrix_artefacts_2" src="https://user-images.githubusercontent.com/1688653/160455432-05c9eb1e-f337-4350-af23-d020a2f1a9a5.png">
-
-## Test Execution
-
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/junit_hyperexecute_matrix_sample.yaml* for Windows and *yaml/linux/junit_hyperexecute_matrix_sample.yaml* for Linux).
-
-#### Execute JUnit tests using Matrix mechanism on Windows platform
-
-Run the following command on the terminal to trigger the tests in Java files with HyperExecute platform set to Windows. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
-
-```bash
-./hyperexecute --config yaml/win/junit_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
-```
-
-#### Execute JUnit tests using Matrix mechanism on Linux platform
-
-Run the following command on the terminal to trigger the tests in Java files with HyperExecute platform set to Linux. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
-
-```bash
-./hyperexecute --config yaml/linux/junit_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
-```
-
-Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution:
-
-<img width="1414" alt="junit_matrix_execution" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
-
-Shown below is the execution screenshot when the YAML file is triggered from the terminal:
-
-<img width="1413" alt="junit_cli1_execution" src="https://user-images.githubusercontent.com/1688653/159760380-7d633a1f-dacc-4851-8142-95dbf25cef8a.png">
-
-<img width="1101" alt="junit_cli2_execution" src="https://user-images.githubusercontent.com/1688653/159760390-4429ff96-7056-4318-911a-972d4570185f.png">
-
-## Secrets Management
-
-In case you want to use any secret keys in the YAML file, the same can be set by clicking on the *Secrets* button the dashboard.
-
-<img width="703" alt="junit_secrets_key_1" src="https://user-images.githubusercontent.com/1688653/152540968-90e4e8bc-3eb4-4259-856b-5e513cbd19b5.png">
-
-Now create a *secret* key that you can use in the HyperExecute YAML file.
-
-<img width="359" alt="junit_management_1" src="https://user-images.githubusercontent.com/1688653/153250877-e58445d1-2735-409a-970d-14253991c69e.png">
-
-All you need to do is create an environment variable that uses the secret key:
+### 🔐 Secrets Management
+Need to use sensitive information like API keys? HyperExecute allows you to store and manage secrets securely.
 
 ```yaml
 env:
   PAT: ${{ .secrets.testKey }}
 ```
 
-## Navigation in Automation Dashboard
+### Pre-Steps and Dependency Caching
+To save time on repeated test runs, you can cache dependencies and set up pre-steps. For example:
 
-HyperExecute lets you navigate from/to *Test Logs* in Automation Dashboard from/to *HyperExecute Logs*. You also get relevant get relevant Selenium test details like video, network log, commands, Exceptions & more in the Dashboard. Effortlessly navigate from the automation dashboard to HyperExecute logs (and vice-versa) to get more details of the test execution.
+```yaml
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - $CACHE_DIR
 
-Shown below is the HyperExecute Automation dashboard which also lists the tests that were executed as a part of the test suite:
+pre:
+  - mvn clean install
+```
+This ensures dependencies like Maven packages are cached and not downloaded every time you run tests.
 
-<img width="1429" alt="junit_hyperexecute_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/160455415-d145dd30-8521-4e5b-8c80-0fcbd730b506.png">
+### Post-Steps
+After your tests complete, you may want to clean up or generate final reports. Post-steps help you do that:
 
-Here is a screenshot that lists the automation test that was executed on the HyperExecute grid:
+```yaml
+post:
+  - cat yaml/junit_hyperexecute_autosplit_sample.yaml
+```
 
-<img width="1429" alt="junit_testing_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/159760375-7f1e3e71-6ea9-449c-8a8d-c4d02c40f7c2.png">
+## 📚 Documentation & Resources
+For more details on how to run and customize tests with HyperExecute, check out:
 
-## LambdaTest Community :busts_in_silhouette:
+- [HyperExecute Documentation](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/)
+- [HyperExcute API Documentation](https://www.lambdatest.com/support/api-doc/?key=hyperexecute)
+- [HyperExecute Case Study Blogs](https://www.lambdatest.com/blog/category/hyperexecute/)
 
-The [LambdaTest Community](https://community.lambdatest.com/) allows people to interact with tech enthusiasts. Connect, ask questions, and learn from tech-savvy people. Discuss best practises in web development, testing, and DevOps with professionals from across the globe.
+## 🤝 Contributing
+We welcome contributions to improve this repository. Here's how you can contribute:
 
-## Documentation & Resources :books:
-      
-If you want to learn more about the LambdaTest's features, setup, and usage, visit the [LambdaTest documentation](https://www.lambdatest.com/support/docs/). You can also find in-depth tutorials around test automation, mobile app testing, responsive testing, manual testing on [LambdaTest Blog](https://www.lambdatest.com/blog/) and [LambdaTest Learning Hub](https://www.lambdatest.com/learning-hub/).     
-      
- ## About LambdaTest
+- Fork this repository.
+- Create a new branch -> `git checkout -b YOUR_NAME/FIX_NAME`.
+- Make your changes and commit them -> `git commit -m 'YOUR_COMMIT_MESSAGE'`.
+- Push the branch to your fork -> `git push origin YOUR_NAME/FIX_NAME`.
+- Open a Pull Request to the main repository.
 
-[LambdaTest](https://www.lambdatest.com) is a leading test execution and orchestration platform that is fast, reliable, scalable, and secure. It allows users to run both manual and automated testing of web and mobile apps across 3000+ different browsers, operating systems, and real device combinations. Using LambdaTest, businesses can ensure quicker developer feedback and hence achieve faster go to market. Over 500 enterprises and 1 Million + users across 130+ countries rely on LambdaTest for their testing needs.
+## 📞 Contact & Support
+Need help or have questions? Reach out to us:
 
-[<img height="70" src="https://user-images.githubusercontent.com/70570645/169649126-ed61f6de-49b5-4593-80cf-3391ca40d665.PNG">](https://accounts.lambdatest.com/register)
-      
-## We are here to help you :headphones:
+- Email: support@lambdatest.com
+- Visit our [Community Forum](https://community.lambdatest.com/)
 
-* Got a query? we are available 24x7 to help. [Contact Us](mailto:support@lambdatest.com)
-* For more info, visit - https://www.lambdatest.com
+
+Thank you for using HyperExecute! 🚀 Happy Testing!
