@@ -1,4 +1,4 @@
-name: Github Actions
+name: HyperExecute-Selenium-JUnit
 on:
   workflow_dispatch:
     inputs:
@@ -13,7 +13,7 @@ on:
         default: https://github.com/LambdaTest/junit-selenium-hyperexecute-sample
         required: true
 jobs:
-  HyperExecute-Selenium:
+  HyperExecute-Selenium-JUnit:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
