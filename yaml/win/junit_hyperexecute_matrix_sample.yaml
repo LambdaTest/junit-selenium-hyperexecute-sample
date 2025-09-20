@@ -5,7 +5,7 @@ runson: win
 concurrency: 3
 
 matrix:
-  classname: ["SelPlayGroundTest1", "SelPlayGroundTest2", "SelPlayGroundTest3" ]
+  classname: ["SelPlayGroundTest1" ]
 
 pre:
   - mvn clean install

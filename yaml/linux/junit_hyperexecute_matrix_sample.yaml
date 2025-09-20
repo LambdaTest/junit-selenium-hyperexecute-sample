@@ -3,7 +3,7 @@ version: 0.1
 runson: linux
 
 matrix:
-  classname: ["SelPlayGroundTest1", "SelPlayGroundTest2", "SelPlayGroundTest3" ]
+  classname: ["SelPlayGroundTest1" ]
 
 pre:
   - mvn clean install
