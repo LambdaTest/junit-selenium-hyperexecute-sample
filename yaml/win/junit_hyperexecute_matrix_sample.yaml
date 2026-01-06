@@ -2,6 +2,10 @@
 version: 0.1
 runson: win
 
+runtime:
+  language: java
+  version: 17
+
 concurrency: 3
 
 matrix:

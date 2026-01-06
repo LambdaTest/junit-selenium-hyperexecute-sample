@@ -2,6 +2,10 @@
 version: 0.1
 runson: mac
 
+runtime:
+  language: java
+  version: 17
+
 matrix:
   classname: ["SelPlayGroundTest1", "SelPlayGroundTest2", "SelPlayGroundTest3" ]
 

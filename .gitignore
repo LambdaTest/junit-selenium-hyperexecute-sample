@@ -8,3 +8,7 @@ nucleus.log
 artifacts
 hyperexecuteupdate
 target/
+.idea/
+hyperexecute
+hyperexecute-cli.log
+
