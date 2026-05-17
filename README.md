@@ -1,224 +1,116 @@
-<img height="100" alt="hyperexecute_logo" src="https://user-images.githubusercontent.com/1688653/159473714-384e60ba-d830-435e-a33f-730df3c3ebc6.png">
+# Run JUnit Selenium Tests with HyperExecute on TestMu AI (Formerly LambdaTest)
 
-HyperExecute is a next-gen test execution platform by LambdaTest, designed to supercharge your test runs with unparalleled speed, scalability, and smart test management. Whether you're running cross-browser tests or executing your CI/CD pipeline, HyperExecute ensures efficiency and speed in the cloud.
+<p align="center">
+  <a href="https://www.testmuai.com/"><img src="https://img.shields.io/badge/MADE%20BY%20TestMu%20AI-000000.svg?style=for-the-badge&labelColor=000" alt="Made by TestMu AI"></a>
+  <a href="https://central.sonatype.com/artifact/junit/junit"><img src="https://img.shields.io/maven-central/v/junit/junit.svg?style=for-the-badge&labelColor=000000" alt="JUnit version"></a>
+  <a href="https://community.testmuai.com/"><img src="https://img.shields.io/badge/Join%20the%20community-blueviolet.svg?style=for-the-badge&labelColor=000000" alt="Community"></a>
+</p>
 
-HyperExecute is configured using a YAML file. Instead of moving the Hub close to you, HyperExecute brings the test scripts close to the Hub!
+## Getting Started
 
-- [HyperExecute HomePage](https://www.lambdatest.com/hyperexecute)
-- [Lambdatest HomePage](https://www.lambdatest.com)
-- [HyperExecute Documentation](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/)
-- [LambdaTest Support](mailto:support@lambdatest.com)
-<br />
+[TestMu AI](https://www.testmuai.com/) (Formerly LambdaTest) is the world's first full-stack AI Agentic Quality Engineering platform that empowers teams to test intelligently, smarter, and ship faster. Built for scale, it offers a full-stack testing cloud with 10K+ real devices and 3,000+ browsers. With AI-native test management, MCP servers, and agent-based automation, TestMu AI supports Selenium, Appium, Playwright, and all major frameworks. 
 
-[<img alt="Try it now" width="200px" align="center" src="images/Try it Now.svg" />](https://hyperexecute.lambdatest.com/?utm_source=github&utm_medium=repository&utm_content=java&utm_term=junit)
-<br /><br />
+With TestMu AI (Formerly LambdaTest), you can run Java JUnit tests with Selenium using the HyperExecute smart test orchestration platform. This sample shows how to configure JUnit + Selenium + HyperExecute to run on the TestMu AI cloud.
 
-## 📖 Table of Contents
+- [Sign up on TestMu AI](https://www.testmuai.com/register/) (Formerly LambdaTest).
+- Follow the [TestMu AI Documentation](https://www.testmuai.com/support/docs/) for the full setup walkthrough.
 
-1. [Run Your Test Using Gitpod](#-run-your-test-using-gitpod)  
-2. [Run Your Test from Local Machine](#-run-your-test-from-local-machine)  
-  2.1 [Fork and Clone the Repository](#1-fork-and-clone-the-repository)<br />
-  2.2 [Download HyperExecute CLI](#2-download-hyperexecute-cli)<br />
-  2.3 [Configure Environment Variables](#3-configure-environment-variables)<br />
-  2.4 [Execute Your Test Suite](#4-execute-your-test-suite)
-3. [Monitoring & Debugging](#-monitoring--debugging)
-4. [Repository Structure](#-repository-structure)
-5. [Key Features for QA Engineers](#-key-features-for-qa-engineers)  
-  5.1 [AutoSplit Execution](#-autosplit-execution)<br />
-  5.2 [Matrix Execution](#%EF%B8%8F-matrix-execution)<br />
-  5.3 [Artifacts Management](#%EF%B8%8F-artifacts-management)<br />
-  5.4 [Secrets Management](#-secrets-management)<br />
-  5.5 [Pre-Steps and Dependency Caching](#pre-steps-and-dependency-caching)<br />
-  5.6 [Post-Steps](#post-steps)
-6. [Documentation & Resources](#-documentation--resources)
-7. [Contributing](#-contributing)
-8. [Contact & Support](#-contact--support)
+### Prerequisites
 
-## 🚀 Run your test using Gitpod
-Follow the below steps to run Gitpod button:
+- Java JDK 11 or higher (latest recommended)
+- Maven: install from [maven.apache.org](https://maven.apache.org/) or via Homebrew on macOS/Linux
+- HyperExecute CLI: download from the [TestMu AI HyperExecute documentation](https://www.testmuai.com/support/docs/hyperexecute-cli-run-tests-on-hyperexecute-from-your-computer/)
+- A [TestMu AI](https://www.testmuai.com/) account with your username and access key
 
-1. Click '**Open in Gitpod**' button (You will be redirected to Login/Signup page).
-2. Login with Lambdatest credentials and it will be redirected to Gitpod editor in new tab and current tab will show hyperexecute dashboard.
+### Setup
 
-[<img alt="Run in Gitpod" width="200px" align="center" src="images/Gitpod.svg" />](https://hyperexecute.lambdatest.com/hyperexecute/jobs?type=gitpod&framework=JUnit)
-<br /><br />
-
-## 🚀 Run your test from Local Machine
-> Before proceeding forward, make sure you have created your account on [LambdaTest](https://accounts.lambdatest.com/login)
-
-Follow the steps below to get started with running Selenium JUnit tests on HyperExecute!
-<br />
-
-### 1. Fork and Clone the Repository
-First, fork this repository and make a copy of it in your github account, and then clone this repository to your local machine:
+Clone and install dependencies:
 
 ```bash
-git clone https://github.com/LambdaTest/junit-selenium-hyperexecute-sample.git
-cd junit-selenium-hyperexecute-sample
+git clone https://github.com/LambdaTest/junit-selenium-hyperexecute-sample && cd junit-selenium-hyperexecute-sample
+mvn -Dmaven.test.skip=true clean install
 ```
-***
 
-### 2. Download HyperExecute CLI
-It is used for interacting and running the tests on the HyperExecute. The [CLI](https://www.lambdatest.com/support/docs/hyperexecute-cli-run-tests-on-hyperexecute-grid/) provides a host of other useful features that accelerate test execution. In order to trigger tests using the CLI, you need to download the HyperExecute CLI binary corresponding to the platform (or OS) from where the tests are triggered:
+Set your credentials as environment variables.
 
-> It is recommended to download the binary in the project's parent directory.
-
-| Operating System | HyperExecute CLI Download Link |
-|------------------|--------------------------------|
-| Linux | https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute |
-| Windows | https://downloads.lambdatest.com/hyperexecute/windows/hyperexecute.exe |
-| macOS | https://downloads.lambdatest.com/hyperexecute/darwin/hyperexecute |
-
-***
-
-### 3. Configure Environment Variables
-Before the tests are run, please [set the environment variables](https://www.lambdatest.com/support/docs/hyperexecute-environment-variable-setup/) `LT_USERNAME` and `LT_ACCESS_KEY` from the terminal. The account details are available on your [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile) page.
-
-- **Linux / macOS :**
-  ```bash
-  export LT_USERNAME=YOUR_LAMBDATEST_USERNAME
-  export LT_ACCESS_KEY=YOUR_LAMBDATEST_ACCESS_KEY
-  ```
-
-- **Windows :**
-  ```bash
-  set LT_USERNAME=YOUR_LAMBDATEST_USERNAME
-  set LT_ACCESS_KEY=YOUR_LAMBDATEST_ACCESS_KEY
-  ```
-***
-
-### 4. Execute your Test Suite
-> **NOTE :** In case of MacOS, if you get a permission denied warning while executing CLI, simply run `chmod u+x ./hyperexecute` to allow permission. In case you get a security popup, allow it from your **System Preferences** → **Security & Privacy** → **General tab**.
-
-Run the below command in your terminal at the root folder of the project:
+**macOS / Linux:**
 
 ```bash
-./hyperexecute --config RELATIVE_PATH_OF_YOUR_YAML_FILE
+export LT_USERNAME="YOUR_USERNAME"
+export LT_ACCESS_KEY="YOUR_ACCESS_KEY"
+export LT_TUNNEL="YOUR_TUNNEL_NAME"
 ```
 
-OR use this command if you have not exported your username and access key in the above step.
+**Windows:**
 
 ```bash
-./hyperexecute --user YOUR_LAMBDATEST_USERNAME --key YOUR_LAMBDATEST_ACCESS_KEY --config RELATIVE_PATH_OF_YOUR_YAML_FILE
-```
-***
-
-## 🔍 Monitoring & Debugging
-You can monitor your test execution in real-time using the HyperExecute Automation Dashboard. Easily navigate between test logs, Selenium reports, and HyperExecute logs.
-
-🔗 Visit the [HyperExecute Dashboard](https://hyperexecute.lambdatest.com/hyperexecute)
-
-## 🧑‍💻 Repository Structure
-Here's a breakdown of the repository structure:
-
-```bash
-/src/test/java/hyperexecute/
-                    SelPlayGroundTest1.java # Example Selenium JUnit test case
-                    SelPlayGroundTest2.java # Example Selenium JUnit test case
-                    SelPlayGroundTest3.java # Example Selenium JUnit test case
-
-/yaml
-  /linux/
-      junit_hyperexecute_autosplit_sample.yaml  # YAML file for Linux OS using AutoSplit Method
-      junit_hyperexecute_matrix_sample.yaml     # YAML file for Linux OS using Matrix Method
-  /win/
-      junit_hyperexecute_autosplit_sample.yaml  # YAML file for Window OS using AutoSplit Method
-      junit_hyperexecute_matrix_sample.yaml     # YAML file for Windows OS using Matrix Method
-  /mac/
-      junit_hyperexecute_autosplit_sample.yaml  # YAML file for macOS using AutoSplit Method
-      junit_hyperexecute_matrix_sample.yaml     # YAML file for macOS using Matrix Method
-  /junit_hyperexecute_hybrid_sample.yaml        # YAML file for Hybrid Method
-
-pom.xml                   # Project Object Model (POM) for Maven
-```
-- **SelPlayGroundTest.java :** Contains a sample test case using JUnit and Selenium WebDriver.
-- **junit_hyperexecute_autosplit_sample.yml :** HyperExecute YAML file for executing test using [AutoSplit Method](https://www.lambdatest.com/support/docs/hyperexecute-auto-split-strategy/).
-- **junit_hyperexecute_matrix_sample.yml :** HyperExecute YAML file for executing test using [Matrix Method](https://www.lambdatest.com/support/docs/hyperexecute-matrix-multiplexing-strategy/).
-- **junit_hyperexecute_hybrid_sample.yml :** HyperExecute YAML file for executing test using [Hybrid Method](https://www.lambdatest.com/support/docs/hyperexecute-hybrid-strategy/).
-- **pom.xml :** Maven configuration file that includes dependencies for Selenium, JUnit, and WebDriver.
-
-***
-
-## 🧑‍💻 Key Features for QA Engineers
-### 🏃 AutoSplit Execution
-[AutoSplit](https://www.lambdatest.com/support/docs/hyperexecute-auto-split-strategy/) execution helps to distribute your test load efficiently, optimizing test execution time. You can configure concurrency at various levels like test suite, file, or module.
-
-```yaml
-autosplit: true
-concurrency: 4
+set LT_USERNAME="YOUR_USERNAME"
+set LT_ACCESS_KEY="YOUR_ACCESS_KEY"
+set LT_TUNNEL="YOUR_TUNNEL_NAME"
 ```
 
-This will run tests with 4 parallel sessions, improving test speed.
+### Run tests
 
-### 🗂️ Matrix Execution
-[Matrix](https://www.lambdatest.com/support/docs/hyperexecute-matrix-multiplexing-strategy/) execution helps you to the same tests across different configurations (like different browsers, OS, etc.) using Matrix Execution. This is useful for cross-environment compatibility testing.
-
-```yaml
-matrix:
-  classname: ["ToDoTest", "SelPlayGroundTest1", "SelPlayGroundTest2" ]
 ```
-### ⚙️ Artifacts Management
-HyperExecute makes it easy to upload and download test [artifacts](https://www.lambdatest.com/support/docs/hyperexecute-artifacts/) (like logs, reports, etc.). Artifacts help you analyze the results of your test runs, improving debugging.
-
-```yaml
-uploadArtifacts:
-  - name: Final Report
-    path:
-      - target/site/**
-  - name: Surefire Report
-    path:
-      - target/surefire-reports/**
-```
-### 🔐 Secrets Management
-Need to use sensitive information like API keys? HyperExecute allows you to store and manage secrets securely.
-
-```yaml
-env:
-  PAT: ${{ .secrets.testKey }}
+./hyperexecute --config yaml/win/.hyperexecute_autosplit.yaml
 ```
 
-### Pre-Steps and Dependency Caching
-To save time on repeated test runs, you can cache dependencies and set up pre-steps. For example:
+View results on your TestMu AI dashboard.
 
-```yaml
-cacheKey: '{{ checksum "pom.xml" }}'
-cacheDirectories:
-  - $CACHE_DIR
+### Local testing with TestMu AI Tunnel
 
-pre:
-  - mvn clean install
+To test locally hosted apps, set up the TestMu AI tunnel. OS-specific guides:
+
+- [Local Testing on Windows](https://www.testmuai.com/support/docs/local-testing-for-windows/)
+- [Local Testing on macOS](https://www.testmuai.com/support/docs/local-testing-for-macos/)
+- [Local Testing on Linux](https://www.testmuai.com/support/docs/local-testing-for-linux/)
+
+Add the following to your capabilities:
+
+```js
+tunnel: true,
 ```
 This ensures dependencies like Maven packages are cached and not downloaded every time you run tests.
 
-### Post-Steps
-After your tests complete, you may want to clean up or generate final reports. Post-steps help you do that:
+## Contributions
 
-```yaml
-post:
-  - cat yaml/junit_hyperexecute_autosplit_sample.yaml
-```
+Contributions are welcome. Open an issue to discuss your idea before submitting a pull request. When reporting bugs, include your Java version, OS, and Maven version.
 
-## 📚 Documentation & Resources
-For more details on how to run and customize tests with HyperExecute, check out:
+## TestMu AI (Formerly LambdaTest) Community
 
-- [HyperExecute Documentation](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/)
-- [HyperExcute API Documentation](https://www.lambdatest.com/support/api-doc/?key=hyperexecute)
-- [HyperExecute Case Study Blogs](https://www.lambdatest.com/blog/category/hyperexecute/)
+Connect with testers and developers in the [TestMu AI Community](https://community.testmuai.com/). Ask questions, share what you are building, and discuss best practices in test automation and DevOps.
+  
+## TestMu AI (Formerly LambdaTest) Certifications
 
-## 🤝 Contributing
-We welcome contributions to improve this repository. Here's how you can contribute:
+Earn free [TestMu AI Certifications](https://www.testmuai.com/certifications/) for testers, developers, and QA engineers. Validate your skills in Selenium, Cypress, Playwright, Appium, Espresso and more. Industry-recognized, shareable on LinkedIn, and built by practitioners, not marketers.
 
-- Fork this repository.
-- Create a new branch -> `git checkout -b YOUR_NAME/FIX_NAME`.
-- Make your changes and commit them -> `git commit -m 'YOUR_COMMIT_MESSAGE'`.
-- Push the branch to your fork -> `git push origin YOUR_NAME/FIX_NAME`.
-- Open a Pull Request to the main repository.
+## Learning Resources by TestMu AI (Formerly LambdaTest)
 
-## 📞 Contact & Support
-Need help or have questions? Reach out to us:
+Learn modern testing through tutorials, guides, videos, and weekly updates:
 
-- Email: support@lambdatest.com
-- Visit our [Community Forum](https://community.lambdatest.com/)
+* [TestMu AI Blog](https://www.testmuai.com/blog/)
+* [TestMu AI Learning Hub](https://www.testmuai.com/learning-hub/)
+* [TestMu AI on YouTube](https://www.youtube.com/@TestMuAI)
+* [TestMu AI Newsletter](https://www.testmuai.com/newsletter/)
+  
+## LambdaTest is Now TestMu AI
 
+On **January 12, 2026**, [LambdaTest evolved to TestMu AI](https://www.testmuai.com/lambdatest-is-now-testmuai/), the world's first fully autonomous **Agentic AI Quality Engineering Platform**.
 
-Thank you for using HyperExecute! 🚀 Happy Testing!
+Same team. Same infrastructure. Same customer accounts. All existing LambdaTest logins, scripts, capabilities, and integrations continue to work without change.
+
+Find the new home for [LambdaTest](https://www.testmuai.com).
+
+### How LambdaTest Evolved into TestMu AI
+
+In 2017, we launched LambdaTest with a simple mission: make testing fast, reliable, and accessible. As LambdaTest grew, we expanded into Test Intelligence, Visual Regression Testing, Accessibility Testing, API Testing, and Performance Testing, covering the full depth of the testing lifecycle.
+
+As software development entered the AI era, testing had to evolve, too. We rebuilt the architecture to be AI-native from the ground up, with autonomous agents that **plan, author, execute, analyze, and optimize tests** while keeping humans in the loop. The platform integrates with your repos, CI, IDEs, and terminals, continuously learning from every code change and development signal.
+
+That evolution earned a new name: **TestMu AI**, built for an AI-first future of quality engineering. TestMu is not a new name for us. It is the name of our annual community conference, which has brought together 100,000+ quality engineers to discuss how AI would reshape testing, long before that became an industry norm. 
+
+What started as a high-performance cloud testing platform has transformed into an AI-native, multi-agent system powering a connected, end-to-end quality layer. That evolution defined a new identity: LambdaTest evolved into TestMu AI, built for an AI-first future of quality engineering.
+
+## Support
+
+Got a question? Email [support@testmuai.com](mailto:support@testmuai.com) or chat with us 24x7 from our chat portal.

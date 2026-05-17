@@ -2,6 +2,10 @@
 version: 0.1
 runson: linux
 
+runtime:
+  language: java
+  version: 17
+
 autosplit: true
 concurrency: 3
 

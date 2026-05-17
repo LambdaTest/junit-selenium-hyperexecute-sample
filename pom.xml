@@ -2,18 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<modelVersion>4.0.0</modelVersion>
-<groupId>org.example</groupId>
-<artifactId>JUnit_HyperTest_Demo</artifactId>
-<version>1.0-SNAPSHOT</version>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example</groupId>
+    <artifactId>JUnit_HyperTest_Demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.surefire.plugin>3.0.0-M5</maven.surefire.plugin>
-        <junit.jupiter.version>5.8.2</junit.jupiter.version>
-        <selenium.java.version>3.141.59</selenium.java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.surefire.plugin>3.5.4</maven.surefire.plugin>
+        <junit.jupiter.version>5.14.0</junit.jupiter.version>
+        <selenium.java.version>4.39.0</selenium.java.version>
     </properties>
 
     <dependencies>
@@ -32,30 +32,21 @@
             <artifactId>webdrivermanager</artifactId>
             <version>5.1.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-nop -->
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
-            <version>1.7.28</version>
+            <version>2.0.17</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
-        <!-- JUnit 4
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13</version>
-            <scope>test</scope>
-        </dependency>
-        -->
-        <!-- Added for JUnit 5 -->
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
@@ -77,11 +68,10 @@
             <type>maven-plugin</type>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jxr-plugin -->
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jxr-plugin</artifactId>
-            <version>3.1.1</version>
+            <version>3.6.0</version>
         </dependency>
 
     </dependencies>
@@ -92,7 +82,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.14.1</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.source}</target>
@@ -102,7 +92,7 @@
             <!-- Added for JUnit 5 -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.5.4</version>
                 <configuration>
                     <properties>
                         <configurationParameters>
@@ -121,7 +111,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.9.0</version>
             </plugin>
         </plugins>
     </build>
@@ -131,12 +121,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.5.4</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.6.0</version>
             </plugin>
         </plugins>
     </reporting>
