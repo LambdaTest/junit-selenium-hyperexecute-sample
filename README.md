@@ -70,6 +70,7 @@ Add the following to your capabilities:
 ```js
 tunnel: true,
 ```
+This ensures dependencies like Maven packages are cached and not downloaded every time you run tests.
 
 ## Contributions
 
