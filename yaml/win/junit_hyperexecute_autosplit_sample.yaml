@@ -1,5 +1,5 @@
 ---
-version: 0.1
+version: 0.2
 runson: win
 
 runtime:
@@ -9,15 +9,27 @@ runtime:
 autosplit: true
 concurrency: 3
 
+env:
+  CACHE_DIR: m2_cache_dir
+  TARGET_OS: win
+
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - ${CACHE_DIR}
+
 pre:
-  - mvn clean install
+  - mvn -Dmaven.repo.local=${CACHE_DIR} -DskipTests clean install
 
-testDiscovery:
-  type: raw
-  mode: remote
-  command: grep 'public class' src/test/java/hyperexecute/*.java | awk '{print$3}'
+mergeArtifacts: true
 
-testRunnerCommand: mvn `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dtest=$test test site surefire-report:report
+framework:
+  name: maven/junit5
+  defaultReports: false
+  flags:
+    - "-Dplatname=win"
+    - "-Dmaven.repo.local=m2_cache_dir"
+  discoveryType: method
+  discoveryMode: remote
 
 retryOnFailure: true
 maxRetries: 1
